@@ -265,7 +265,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 47649128}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2289f949efabb20449b65eeda844f67f, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -420,6 +420,7 @@ MonoBehaviour:
   - {fileID: 6047138342208323817, guid: 313be6df5e325ea45b14d602da23502a, type: 3}
   ballsCount: 4
   spawnDelay: 4
+  maxHealth: 120
 --- !u!1 &303590250
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,7 +864,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0666cdafb50073345ba40fc9337d0113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLevel: 5
   ScreenWidth: 0
+  items:
+  - item: {fileID: 2780567506803887634, guid: e35bf92a4a382cf45b1ccc6f78be29df, type: 3}
+    chance: 0.7
+    cost: 0
+  - item: {fileID: 7143714537031087861, guid: 4a34aed64354c1042a9b5fb6079ba0ec, type: 3}
+    chance: 0.6
+    cost: 0
+  - item: {fileID: 7116097337950203175, guid: f21824cc96af30643870eca8f41bc24e, type: 3}
+    chance: 0.5
+    cost: 0
+  - item: {fileID: 5779789350437948482, guid: 71287ff1d11b9e349b417b4c561c224a, type: 3}
+    chance: 0.3
+    cost: 0
 --- !u!4 &759962083
 Transform:
   m_ObjectHideFlags: 0
@@ -1166,7 +1181,7 @@ Transform:
   m_GameObject: {fileID: 1837317850}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.15, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 518373856}

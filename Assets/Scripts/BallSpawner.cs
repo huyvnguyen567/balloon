@@ -9,6 +9,7 @@ public class BallSpawner : MonoBehaviour
     [SerializeField] private GameObject[] ballPrefabs;
     [SerializeField] private int ballsCount;
     [SerializeField] private float spawnDelay;
+    [SerializeField] private int maxHealth;
 
     private GameObject[] balls;
 
@@ -39,7 +40,7 @@ public class BallSpawner : MonoBehaviour
         {
             balls[i] = Instantiate(ballPrefabs[Random.Range(0, prefabsCount)], transform);
             balls[i].GetComponent<BallFissionable>().size = Random.Range(1, 5);
-            balls[i].GetComponent<BallFissionable>().health = Random.Range(1, 20);
+            balls[i].GetComponent<BallFissionable>().health = Random.Range(1, maxHealth);
             balls[i].GetComponent<Ball>().isResultOfFission = false;
             balls[i].SetActive(false);
         }

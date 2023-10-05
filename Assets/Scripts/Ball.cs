@@ -6,23 +6,28 @@ using TMPro;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] public int health;
+    [SerializeField] public float health;
     [SerializeField] public float size;
     [SerializeField] protected float jumpForce;
 
     [SerializeField] protected TextMeshPro healthText;
     [SerializeField] protected float minDelayShowing = 1f;
     [SerializeField] protected float maxDelayShowing = 2f;
-  
+    [SerializeField] private List<Color> ballColors = new List<Color>();
+
     protected int[] leftAndRight = new int[] { -1, 1 };
     protected Rigidbody2D rb;
     protected bool isShowing;
+    protected int minSize = 1;
+    private SpriteRenderer spriteRenderer;
+
     [HideInInspector] public bool isResultOfFission = true;
 
-    public int initHealth;
+    public float initHealth;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -56,7 +61,6 @@ public class Ball : MonoBehaviour
     {
         if (collision.CompareTag("Cannon"))
         {
-            //game over
             Debug.Log("game over");
         }
         else if (!isShowing && collision.CompareTag("Wall"))
@@ -75,56 +79,73 @@ public class Ball : MonoBehaviour
         else if (collision.CompareTag("Ground"))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            rb.AddTorque(rb.angularVelocity * 4f);
+            rb.AddTorque(rb.angularVelocity);
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
-        if (health > damage)
+        health -= damage;
+        if (health > 0)
         {
-            health -= damage;
             UpdateVisuals();
         }
         else
         {
             Die();
+            if(size == 1)
+            {
+                DropItem();
+            }
         }
         
     }
 
     protected void UpdateVisuals()
     {
-        healthText.text = health.ToString();
+        if (health < 1)
+        {
+            health = 1;
+        }
+        healthText.text = ((int)health).ToString();
+
+        spriteRenderer.color = GetHealthColor(GameController.Instance.CurrentLevel,(int)health);
         transform.localScale = new Vector2(size, size);
+    }
+
+    public Color GetHealthColor(int level, int health)
+    {
+        int colorsCount = ballColors.Count;
+        int colorIndex;
+        if(health < 10)
+        {
+            colorIndex = health - 1;
+        }
+        else
+        {
+            // Tính toán chỉ số màu dựa trên số lượng máu và level
+            colorIndex = (health - 1) / (level);
+            if (colorIndex > colorsCount - 1)
+            {
+                colorIndex = colorIndex % colorsCount;
+            }
+        } 
+        return ballColors[colorIndex];
     }
 
     protected virtual void Die()
     {
         Destroy(gameObject);
     }
-    //private void Split()
-    //{
-    //    if (size > 1)
-    //    {
-    //        GameObject smallBall1 = Instantiate(gameObject, transform.position, Quaternion.identity);
-    //        GameObject smallBall2 = Instantiate(gameObject, transform.position, Quaternion.identity);
 
-    //        Ball smallBallScript1 = GetComponent<Ball>();
-    //        Ball smallBallScript2 = GetComponent<Ball>();
+    public void DropItem()
+    {
+        float random = Random.value;
+        if (random > 0.4f)
+        {
+            GameObject item;
+            item = Instantiate(GameController.Instance.GetRandomItem(), transform.position, Quaternion.identity);
+        }      
+    }
 
-    //        smallBall1.GetComponent<Rigidbody2D>().AddForce(Vector2.left * 7f);
-    //        smallBall2.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 7f);
-
-    //        smallBallScript1.size = size * 0.75f;
-    //        smallBallScript2.size = size * 0.75f;
-
-    //        Destroy(gameObject);
-    //    }
-    //    else
-    //    {
-    //        Destroy(gameObject);
-    //    }
-
-    //}
 }

@@ -10,7 +10,7 @@ public class BallFissionable : Ball
 
     override protected void Die()
     {
-        if (size > 1)
+        if (size > minSize)
         {
             SplitBalls();
             Destroy(gameObject);

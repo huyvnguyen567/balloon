@@ -87,4 +87,12 @@ public class Canon : MonoBehaviour
             bullet.SetActive(true);
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+            collision.gameObject.SetActive(false);
+        }
+    }
 }
