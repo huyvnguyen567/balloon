@@ -7,7 +7,7 @@ using TMPro;
 public class Ball : MonoBehaviour
 {
     [SerializeField] public float health;
-    [SerializeField] public float size;
+    [SerializeField] public int size;
     [SerializeField] protected float jumpForce;
 
     [SerializeField] protected TextMeshPro healthText;
@@ -24,17 +24,21 @@ public class Ball : MonoBehaviour
     [HideInInspector] public bool isResultOfFission = true;
 
     public float initHealth;
+    public int initSize;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         initHealth = health;
+        initSize = size;
+    }
+    private void Start()
+    {
         UpdateVisuals();
-
         isShowing = true;
         rb.gravityScale = 0f;
         if (isResultOfFission)
@@ -61,7 +65,7 @@ public class Ball : MonoBehaviour
     {
         if (collision.CompareTag("Cannon"))
         {
-            Debug.Log("game over");
+            //Debug.Log("game over");
         }
         else if (!isShowing && collision.CompareTag("Wall"))
         {
@@ -86,29 +90,23 @@ public class Ball : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        if (health > 0)
+        if (health < 1)
         {
-            UpdateVisuals();
+            Die();
         }
         else
         {
-            Die();
-            if(size == 1)
-            {
-                DropItem();
-            }
+            UpdateVisuals();
         }
-        
     }
 
     protected void UpdateVisuals()
     {
-        if (health < 1)
+        if(health < 1)
         {
-            health = 1;
+            healthText.text = "1";
         }
         healthText.text = ((int)health).ToString();
-
         spriteRenderer.color = GetHealthColor(GameController.Instance.CurrentLevel,(int)health);
         transform.localScale = new Vector2(size, size);
     }
@@ -116,8 +114,9 @@ public class Ball : MonoBehaviour
     public Color GetHealthColor(int level, int health)
     {
         int colorsCount = ballColors.Count;
+
         int colorIndex;
-        if(health < 10)
+        if(health > 1 && health < 10)
         {
             colorIndex = health - 1;
         }
@@ -135,17 +134,7 @@ public class Ball : MonoBehaviour
 
     protected virtual void Die()
     {
-        Destroy(gameObject);
-    }
-
-    public void DropItem()
-    {
-        float random = Random.value;
-        if (random > 0.4f)
-        {
-            GameObject item;
-            item = Instantiate(GameController.Instance.GetRandomItem(), transform.position, Quaternion.identity);
-        }      
+        ObjectPool.Instance.ReturnObjectToPool("Ball", gameObject);
     }
 
 }

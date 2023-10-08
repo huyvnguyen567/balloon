@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 518284497540064984}
   - component: {fileID: 518284497540064987}
   - component: {fileID: 518284497540064985}
-  - component: {fileID: 4442596755046339292}
+  - component: {fileID: 164290190569652094}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -110,7 +110,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 518284497540064964}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.13, y: 7, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
@@ -157,7 +157,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4442596755046339292
+--- !u!114 &164290190569652094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,15 +169,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4e324f720a096479c672155cec8334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 1
   size: 1
-  jumpForce: 15
-  healthText: {fileID: 518284498677226501}
+  jumpForce: 14
+  healthText: {fileID: 6047138341196937768, guid: 313be6df5e325ea45b14d602da23502a, type: 3}
   minDelayShowing: 1
   maxDelayShowing: 2
-  InitHealth: 0
+  ballColors:
+  - {r: 0.5176471, g: 1, b: 0, a: 1}
+  - {r: 0.20117024, g: 0.5471698, b: 0.18325028, a: 1}
+  - {r: 0.3254272, g: 0.65779376, b: 0.9716981, a: 1}
+  - {r: 0, g: 0.25371575, b: 1, a: 1}
+  - {r: 0.24579345, g: 0.028435374, b: 0.6698113, a: 1}
+  - {r: 0.7169812, g: 0, b: 0.7072871, a: 1}
+  - {r: 0.509434, g: 0.13111521, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.8584906, g: 0.8044652, b: 0, a: 1}
   isResultOfFission: 1
-  splitPrefab: []
+  initHealth: 0
+  initSize: 0
+  isFirst: 1
+  ballPrefab: {fileID: 6047138342208323817, guid: 313be6df5e325ea45b14d602da23502a, type: 3}
 --- !u!1 &518284498677226502
 GameObject:
   m_ObjectHideFlags: 0

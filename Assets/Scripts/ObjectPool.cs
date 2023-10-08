@@ -6,10 +6,13 @@ public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool Instance;
 
-    private Queue<GameObject> pooledObjects = new Queue<GameObject>();
-    private int poolSize = 20;
+    private Dictionary<string, Queue<GameObject>> pooledObjects = new Dictionary<string, Queue<GameObject>>();
+    [SerializeField] private int poolSize = 20;
 
-    [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject ballPrefab;
+    [SerializeField] private GameObject itemPrefab;
+
 
     private void Awake()
     {
@@ -21,33 +24,71 @@ public class ObjectPool : MonoBehaviour
 
     void Start()
     {
-        for(int i=0; i < poolSize; i++)
-        {
-            GameObject obj = Instantiate(_bulletPrefab, transform);
-            obj.SetActive(false);
-            pooledObjects.Enqueue(obj);
-        }
+        InitializePool(bulletPrefab, "Bullet", poolSize) ;
+        InitializePool(ballPrefab, "Ball", poolSize);
+        InitializePool(itemPrefab, "Item", poolSize);
     }
 
-    public GameObject GetObjectFromPool()
+    private void InitializePool(GameObject prefab, string objectType, int size)
     {
-        if (pooledObjects.Count > 0)
+        Queue<GameObject> objectQueue = new Queue<GameObject>();
+        for (int i = 0; i < size; i++)
         {
-            GameObject obj = pooledObjects.Dequeue();
-            obj.SetActive(true);
-            return obj;
+            GameObject obj = Instantiate(prefab, transform);
+            obj.SetActive(false);
+            objectQueue.Enqueue(obj);
+        }
+        pooledObjects.Add(objectType, objectQueue);
+    }
+
+    public GameObject GetObjectFromPool(string objectType)
+    {
+        if (pooledObjects.ContainsKey(objectType))
+        {
+            Queue<GameObject> objectQueue = pooledObjects[objectType];
+            if (objectQueue.Count > 0)
+            {
+                GameObject obj = objectQueue.Dequeue();
+                obj.SetActive(true);
+                return obj;
+            }
+            else
+            {
+                GameObject newObj = Instantiate(GetPrefabByType(objectType));
+                newObj.SetActive(true);
+                return newObj;
+            }
         }
         else
         {
-            GameObject newObj = Instantiate(_bulletPrefab);
-            newObj.SetActive(true);
-            return newObj;
+            return null;
+        }
+
+    }
+
+    public void ReturnObjectToPool(string objectType, GameObject obj)
+    {
+        obj.SetActive(false);
+        if (pooledObjects.ContainsKey(objectType))
+        {
+            pooledObjects[objectType].Enqueue(obj);
         }
     }
 
-    public void ReturnObjectToPool(GameObject obj)
+    private GameObject GetPrefabByType(string objectType)
     {
-        obj.SetActive(false);
-        pooledObjects.Enqueue(obj);
+        switch (objectType)
+        {
+            case "Bullet":
+                return bulletPrefab;
+            case "Ball":
+                return ballPrefab; 
+            case "Item":
+                return itemPrefab; 
+                
+            default:
+                Debug.LogError("Prefab " + objectType + " not found");
+                return null;
+        }
     }
 }

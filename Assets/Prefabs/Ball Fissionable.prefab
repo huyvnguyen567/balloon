@@ -353,8 +353,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4e324f720a096479c672155cec8334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
-  size: 3
+  health: 1
+  size: 1
   jumpForce: 14
   healthText: {fileID: 6047138341196937768}
   minDelayShowing: 1
@@ -371,4 +371,5 @@ MonoBehaviour:
   - {r: 0.8584906, g: 0.8044652, b: 0, a: 1}
   isResultOfFission: 1
   initHealth: 0
-  splitPrefab: {fileID: 6047138342208323817}
+  initSize: 0
+  ballPrefab: {fileID: 6047138342208323817}

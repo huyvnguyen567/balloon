@@ -80,7 +80,7 @@ public class Canon : MonoBehaviour
 
     public void Fire()
     {
-        GameObject bullet = ObjectPool.Instance.GetObjectFromPool();
+        GameObject bullet = ObjectPool.Instance.GetObjectFromPool("Bullet");
         if(bullet != null)
         {
             bullet.transform.position = transform.position + new Vector3(0, 1, 0);
@@ -92,7 +92,7 @@ public class Canon : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Coin"))
         {
-            collision.gameObject.SetActive(false);
+            ObjectPool.Instance.ReturnObjectToPool("Item", collision.gameObject);
         }
     }
 }
