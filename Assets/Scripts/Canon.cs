@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Canon : MonoBehaviour
 {
@@ -11,9 +12,10 @@ public class Canon : MonoBehaviour
     [SerializeField] private Transform rightWheel;
 
     [SerializeField] private float fireRate = 0.2f;
+
     private float fireTimer = 0;
 
-    private bool isMoving = false;
+    private bool isMoving = true;
 
     private Camera cam;
     private Rigidbody2D rb;

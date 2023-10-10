@@ -9,7 +9,6 @@ public class BallSpawner : MonoBehaviour
     [SerializeField] private int ballsCount;
     [SerializeField] private float spawnDelay;
     [SerializeField] private int maxHealth;
-    //[SerializeField] private GameObject[] ballsPrefab;
 
     private GameObject[] balls;
 
@@ -20,9 +19,10 @@ public class BallSpawner : MonoBehaviour
     void Start()
     {
         PrepareBalls();
-        StartCoroutine(SpawnBalls());
+        GameController.Instance.onStartGame.AddListener(delegate { StartCoroutine(SpawnBalls()); });
+        //StartCoroutine(SpawnBalls());
     }
-
+ 
     IEnumerator SpawnBalls()
     {
         for (int i = 0; i < ballsCount; i++)

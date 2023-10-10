@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
         rb.velocity = new Vector2(0, moveSpeed);
         if (Time.time - _spawnTime > lifeTime)
         {
-            ObjectPool.Instance.ReturnObjectToPool("bullet", gameObject);
+            ObjectPool.Instance.ReturnObjectToPool("Bullet", gameObject);
         }
     }
     
@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
             {
                 ball.TakeDamage(damage);
             }
-            ObjectPool.Instance.ReturnObjectToPool("bullet", gameObject);
+            ObjectPool.Instance.ReturnObjectToPool("Bullet", gameObject);
         }
     }
 }
