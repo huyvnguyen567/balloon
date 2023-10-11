@@ -177,7 +177,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bigMainMenuPanel: {fileID: 0}
-  bigMainMenuPanelPrefab: {fileID: 7416402763177253181, guid: 1734edc76310c9748be79486579950a8, type: 3}
+  bigMainMenuPanelPrefab: {fileID: 6178467960026298923, guid: 1734edc76310c9748be79486579950a8, type: 3}
 --- !u!1 &47649128
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,23 +1155,6 @@ MonoBehaviour:
   currentLevel: 5
   currentGameState: 0
   ScreenWidth: 0
-  items:
-  - name: yellow
-    sprite: {fileID: 21300000, guid: b76a8d0d8e4e891479fd84d146759ff6, type: 2}
-    chance: 0.5
-    cost: 0
-  - name: blue
-    sprite: {fileID: 21300000, guid: 912b52a845c865b41bba5195ce007211, type: 2}
-    chance: 0.3
-    cost: 0
-  - name: red
-    sprite: {fileID: 21300000, guid: e40568bb4bab6d947923e1b511c529c9, type: 2}
-    chance: 0.1
-    cost: 0
-  - name: pink
-    sprite: {fileID: 21300000, guid: b43e13489ebf4f04eb9846689d17140b, type: 2}
-    chance: 0.1
-    cost: 0
   cannonPrefab: {fileID: 118981354780877801, guid: 70a0aa4257365c34dbf566d446330b3d, type: 3}
 --- !u!4 &759962083
 Transform:
@@ -1703,6 +1686,113 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1062430415}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1969367802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1969367804}
+  - component: {fileID: 1969367803}
+  m_Layer: 0
+  m_Name: DataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1969367803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969367802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e581252372449a141a71d4c3409f0b12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - name: Yellow
+    sprite: {fileID: 21300000, guid: b76a8d0d8e4e891479fd84d146759ff6, type: 2}
+    chance: 0.5
+    cost: 0
+  - name: Blue
+    sprite: {fileID: 21300000, guid: 912b52a845c865b41bba5195ce007211, type: 2}
+    chance: 0.3
+    cost: 0
+  - name: Red
+    sprite: {fileID: 21300000, guid: e40568bb4bab6d947923e1b511c529c9, type: 2}
+    chance: 0.1
+    cost: 0
+  - name: Pink
+    sprite: {fileID: 21300000, guid: b43e13489ebf4f04eb9846689d17140b, type: 2}
+    chance: 0.1
+    cost: 0
+  themes:
+  - name: Background_0
+    active: {fileID: -747300821, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 1
+  - name: Background_1
+    active: {fileID: -957230629, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 0
+  - name: Background_2
+    active: {fileID: -1122389979, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 0
+  - name: Background_3
+    active: {fileID: 911512460, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 0
+  - name: Background_4
+    active: {fileID: -1421697852, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 0
+  - name: Background_5
+    active: {fileID: -1459289533, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 0
+  - name: Background_6
+    active: {fileID: 458672846, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 0
+  - name: Background_7
+    active: {fileID: 907353721, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 0
+  - name: Background_8
+    active: {fileID: -520967969, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 0
+  - name: Background_9
+    active: {fileID: -1751589001, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 0
+  - name: Background_10
+    active: {fileID: 1566517437, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 0
+  - name: Background_11
+    active: {fileID: 51017899, guid: b6922bd7d3a997c4ca0f7b5ea4805e2b, type: 3}
+    pass: 0
+  - name: Background_12
+    active: {fileID: 0}
+    pass: 0
+  - name: Background_13
+    active: {fileID: 0}
+    pass: 0
+  - name: Background_14
+    active: {fileID: 0}
+    pass: 0
+--- !u!4 &1969367804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969367802}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2034537256
 GameObject:

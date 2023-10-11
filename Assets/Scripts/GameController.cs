@@ -3,14 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[System.Serializable]
-public class ItemData
-{
-    public string name;
-    public Sprite sprite;
-    public float chance;
-    public int cost;
-}
+
 
 public class GameController : MonoBehaviour
 {
@@ -31,7 +24,8 @@ public class GameController : MonoBehaviour
     public GameState currentGameState;
     [HideInInspector] public float ScreenWidth;
 
-    public List<ItemData> items = new List<ItemData>();
+ 
+
     public GameObject cannonPrefab;
 
     private void Awake()
@@ -46,16 +40,7 @@ public class GameController : MonoBehaviour
     {
         SwitchGameState(GameState.MainMenu);
     }
-    private void Update()
-    {
-        MainMenuPanel mainMenuPanel = UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().mainMenuPanelScript;
-        if (mainMenuPanel != null && currentGameState == GameState.MainMenu && mainMenuPanel.hasBeenClicked)
-        {
-            onStartGame.Invoke();
-            mainMenuPanel.hasBeenClicked = false;
-            Instantiate(cannonPrefab, mainMenuPanel.cannonAnim.transform.position, Quaternion.identity);
-        }
-    }
+  
   
     public void SwitchGameState(GameState newState)
     {
@@ -88,7 +73,7 @@ public class GameController : MonoBehaviour
         float totalChance = 0f;
         float randomValue = Random.Range(0f, 1f);
 
-        foreach (var itemData in items)
+        foreach (var itemData in DataManager.Instance.items)
         {
             totalChance += itemData.chance;
             if (randomValue <= totalChance)

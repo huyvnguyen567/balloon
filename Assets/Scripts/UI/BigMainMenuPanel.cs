@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class BigMainMenuPanel : MonoBehaviour
 {
-    //Script
+    //Script 
     public MainMenuPanel mainMenuPanelScript;
     //GameObject con
     public GameObject themePanel;
-    public GameObject mainMenuPanel;
     public GameObject topPanel;
     public GameObject bottomPanel;
     public GameObject rightPanel;
+    public GameObject mainMenuPanel;
 
     //Top Panel
     [SerializeField] private Button themeButton;
@@ -24,7 +24,7 @@ public class BigMainMenuPanel : MonoBehaviour
     private Color selectedColor = new Color(0.8f, 0.7f, 0.4f, 1f);
     private Button currentSelectedButton;
 
-    //mainmenu
+
     private void OnEnable()
     {
         themePanel.SetActive(false);
@@ -32,24 +32,32 @@ public class BigMainMenuPanel : MonoBehaviour
         OnClickChangeColorEvent(cannonButton);
         OnClickChangeColorEvent(battleButton);
         OnClickChangeColorEvent(shopButton);
+        OnButtonClick(battleButton);
         themeButton.onClick.AddListener(() => OnThemeEventClick());
         battleButton.onClick.AddListener(() => OnBattleEventClick());
     }
-
+   
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnPlayEventClick();
+        }
+    }
     public void OnClickChangeColorEvent(Button button)
     {
-        button.transform.GetChild(0).GetComponent<Image>().color = defaultColor;
+        button.GetComponent<Image>().color = defaultColor;
         button.onClick.AddListener(() => OnButtonClick(button));
     }
     private void OnButtonClick(Button clickedButton)
     {
         if (currentSelectedButton != null)
         {
-            currentSelectedButton.transform.GetChild(0).GetComponent<Image>().color = defaultColor;
+            currentSelectedButton.GetComponent<Image>().color = defaultColor;
         }
 
         currentSelectedButton = clickedButton;
-        currentSelectedButton.transform.GetChild(0).GetComponent<Image>().color = selectedColor;
+        currentSelectedButton.GetComponent<Image>().color = selectedColor;
     }
 
     public void OnThemeEventClick()
@@ -64,5 +72,16 @@ public class BigMainMenuPanel : MonoBehaviour
         mainMenuPanel.SetActive(true);
         rightPanel.SetActive(true);
         themePanel.SetActive(false);
+    }
+
+    public void OnPlayEventClick()
+    {
+        if(mainMenuPanelScript.hasBeenClicked && GameController.Instance.currentGameState == GameController.GameState.MainMenu)
+        {
+            GameController.Instance.onStartGame.Invoke();
+            Instantiate(GameController.Instance.cannonPrefab, mainMenuPanelScript.cannonAnim.transform.position, Quaternion.identity);
+            mainMenuPanelScript.hasBeenClicked = false;
+            bottomPanel.SetActive(false);
+        }
     }
 }
