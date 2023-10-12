@@ -23,8 +23,6 @@ public class UIManager : MonoBehaviour
             Instance = this;
         }
     }
-
-    // Update is called once per frame
     public GameObject Spawn(UIType type, GameObject ui)
     {
         switch (type)
