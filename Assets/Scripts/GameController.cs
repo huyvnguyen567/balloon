@@ -14,7 +14,6 @@ public class GameController : MonoBehaviour
     {
         MainMenu,
         Gameplay,
-        ThemeSelect,
         Pause,
         Win,
         Lose
@@ -23,8 +22,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private int currentLevel;
     public GameState currentGameState;
     [HideInInspector] public float ScreenWidth;
+    public SpriteRenderer background;
 
- 
 
     public GameObject cannonPrefab;
 
@@ -47,10 +46,9 @@ public class GameController : MonoBehaviour
         switch (newState)
         {
             case GameState.MainMenu:
-                UIManager.Instance.bigMainMenuPanel = UIManager.Instance.Spawn(UIManager.Instance.bigMainMenuPanelPrefab);
-                break;
-
-            case GameState.ThemeSelect:  
+                UIManager.Instance.bigMainMenuPanel = UIManager.Instance.Spawn(UIType.Window, UIManager.Instance.bigMainMenuPanelPrefab);
+                UIManager.Instance.processTaskPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.processTaskPopupPrefab);
+                UIManager.Instance.processTaskPopup.SetActive(false);
                 break;
 
             case GameState.Gameplay:

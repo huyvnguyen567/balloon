@@ -2285,6 +2285,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5595621396168257007}
   - component: {fileID: 5595621396168256976}
+  - component: {fileID: 2346936431472711482}
+  - component: {fileID: 7977171322727010830}
   m_Layer: 5
   m_Name: Bottom
   m_TagString: Untagged
@@ -2343,6 +2345,44 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!222 &2346936431472711482
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5595621396168257006}
+  m_CullTransparentMesh: 1
+--- !u!114 &7977171322727010830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5595621396168257006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6178467960026298923
 GameObject:
   m_ObjectHideFlags: 0
@@ -2534,7 +2574,6 @@ GameObject:
   - component: {fileID: 7372377094332556325}
   - component: {fileID: 7372377094332556327}
   - component: {fileID: 7372377094332556324}
-  - component: {fileID: 7372377094332556326}
   - component: {fileID: 6153477669843114984}
   m_Layer: 5
   m_Name: ThemeChange Panel
@@ -2603,18 +2642,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7372377094332556326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7372377094332556322}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d62fe9c5696284945911fbc710e77531, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6153477669843114984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2627,9 +2654,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98644d468c83e0944be28a0f3cdcfc72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  themes:
+  - {fileID: 11400000, guid: 64f1993d68c45b8418a39fc595722c4e, type: 2}
+  - {fileID: 11400000, guid: 15ccece5cbd043540ac3b7d228879ac6, type: 2}
+  - {fileID: 11400000, guid: 302d0d00bf5b65149b6fc3bd9b9de6e5, type: 2}
+  - {fileID: 11400000, guid: c0a057300bd60dd48bfcf1346a110794, type: 2}
+  - {fileID: 11400000, guid: a1f04ba3f8855a749845a16aff349600, type: 2}
+  - {fileID: 11400000, guid: 91a4b16e86d7d214e877c2eda5b7cbe3, type: 2}
+  - {fileID: 11400000, guid: 7836195ba9f70684fb467dcdfb279d31, type: 2}
+  - {fileID: 11400000, guid: c04f2ef4bf02df84bb49b22761c3864f, type: 2}
+  - {fileID: 11400000, guid: d97c5943c1d15e24db21efedf4a0d151, type: 2}
+  - {fileID: 11400000, guid: 149a3000845fb724c83c00359b725d00, type: 2}
+  - {fileID: 11400000, guid: 05d1288e6aa2cab4ab6c117998a41eda, type: 2}
+  - {fileID: 11400000, guid: 674c528e0547c3047a68d752a1254737, type: 2}
   themePrefab: {fileID: 9049371716105603568, guid: 56ab15f44d591ad42b625592cb994cba, type: 3}
   content: {fileID: 7372377093767522322}
   inActive: {fileID: 21300000, guid: ed4f635b77e182a4a94286deda0d3687, type: 3}
+  background: {fileID: 7434833835709309389, guid: 60bf6288866fd6a4c9bdb8bcda41a578, type: 3}
 --- !u!1 &7372377094732258452
 GameObject:
   m_ObjectHideFlags: 0
