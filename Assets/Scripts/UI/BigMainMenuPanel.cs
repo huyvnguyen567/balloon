@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class BigMainMenuPanel : MonoBehaviour
 {
     //Script 
-    public MainMenuPanel mainMenuPanelScript;
+    public BattleTutorialPanel battleTutorialPanelScript;
     //GameObject con
     public GameObject themePanel;
     public GameObject topPanel;
     public GameObject bottomPanel;
     public GameObject rightPanel;
-    public GameObject mainMenuPanel;
+    public GameObject battleTutorialPanel;
+    public GameObject cannonPanel;
 
     //Top Panel
     [SerializeField] private Button themeButton;
@@ -24,10 +25,10 @@ public class BigMainMenuPanel : MonoBehaviour
     private Color selectedColor = new Color(0.8f, 0.7f, 0.4f, 1f);
     private Button currentSelectedButton;
 
-
     private void OnEnable()
     {
         themePanel.SetActive(false);
+        cannonPanel.SetActive(false);
         OnClickChangeColorEvent(themeButton);
         OnClickChangeColorEvent(cannonButton);
         OnClickChangeColorEvent(battleButton);
@@ -35,6 +36,7 @@ public class BigMainMenuPanel : MonoBehaviour
         OnButtonClick(battleButton);
         themeButton.onClick.AddListener(() => OnThemeEventClick());
         battleButton.onClick.AddListener(() => OnBattleEventClick());
+        cannonButton.onClick.AddListener(() => OnCannonEventClick());
     }
    
     private void Update()
@@ -63,24 +65,33 @@ public class BigMainMenuPanel : MonoBehaviour
     public void OnThemeEventClick()
     {
         themePanel.SetActive(true);
-        mainMenuPanel.SetActive(false);
+        battleTutorialPanel.SetActive(false);
         rightPanel.SetActive(false);
     }
 
     public void OnBattleEventClick()
     {
-        mainMenuPanel.SetActive(true);
+        battleTutorialPanel.SetActive(true);
         rightPanel.SetActive(true);
         themePanel.SetActive(false);
+        cannonPanel.SetActive(false);
+      
     }
 
+    public void OnCannonEventClick()
+    {
+        cannonPanel.SetActive(true);
+        themePanel.SetActive(false);
+        battleTutorialPanel.SetActive(false);
+        rightPanel.SetActive(false);
+    }
     public void OnPlayEventClick()
     {
-        if(mainMenuPanelScript.hasBeenClicked && GameController.Instance.currentGameState == GameController.GameState.MainMenu)
+        if(battleTutorialPanelScript.hasBeenClicked && GameController.Instance.currentGameState == GameController.GameState.MainMenu)
         {
             GameController.Instance.onStartGame.Invoke();
-            Instantiate(GameController.Instance.cannonPrefab, mainMenuPanelScript.cannonAnim.transform.position, Quaternion.identity);
-            mainMenuPanelScript.hasBeenClicked = false;
+            Instantiate(GameController.Instance.cannonPrefab, battleTutorialPanelScript.cannon.transform.position, Quaternion.identity);
+            battleTutorialPanelScript.hasBeenClicked = false;
             bottomPanel.SetActive(false);
         }
     }

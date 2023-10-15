@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     public GameObject bigMainMenuPanel;
     public GameObject processTaskPopup;
+    public GameObject cannonBuyPopup;
 
     [Header("Parent Transform")]
     [SerializeField] private GameObject parentWindow;
@@ -15,6 +16,7 @@ public class UIManager : MonoBehaviour
     [Header("Prefab")]
     public GameObject bigMainMenuPanelPrefab;
     public GameObject processTaskPopupPrefab;
+    public GameObject cannonBuyPopupPrefab;
 
     void Awake()
     {
@@ -35,6 +37,7 @@ public class UIManager : MonoBehaviour
                 return null;
         }
     }
+
 }
 public enum UIType
 {

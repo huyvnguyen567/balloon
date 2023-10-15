@@ -16,6 +16,8 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance;
     public List<ItemData> items = new List<ItemData>();
 
+    public int diamond = 1700;
+
     private void Awake()
     {
         if (Instance == null)

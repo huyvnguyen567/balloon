@@ -326,7 +326,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 4908599239518077133}
   m_HandleRect: {fileID: 0}
@@ -428,6 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ee4b88ba270274ba80f303e7287fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backgroundRect: {fileID: 5843031014324686964}
   taskNameText: {fileID: 5843031014067180461}
   processText: {fileID: 3536524290663152}
   processSlider: {fileID: 1976837096519828845}

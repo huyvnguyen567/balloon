@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance;
     public UnityEvent onStartGame = new UnityEvent(); // Sự kiện bấm chuột
+    public static UnityEvent OnBuyClick = new UnityEvent();
 
     public enum GameState
     {
@@ -23,8 +24,6 @@ public class GameController : MonoBehaviour
     public GameState currentGameState;
     [HideInInspector] public float ScreenWidth;
     public SpriteRenderer background;
-
-
     public GameObject cannonPrefab;
 
     private void Awake()
@@ -48,7 +47,9 @@ public class GameController : MonoBehaviour
             case GameState.MainMenu:
                 UIManager.Instance.bigMainMenuPanel = UIManager.Instance.Spawn(UIType.Window, UIManager.Instance.bigMainMenuPanelPrefab);
                 UIManager.Instance.processTaskPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.processTaskPopupPrefab);
+                UIManager.Instance.cannonBuyPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.cannonBuyPopupPrefab);
                 UIManager.Instance.processTaskPopup.SetActive(false);
+                UIManager.Instance.cannonBuyPopup.SetActive(false);
                 break;
 
             case GameState.Gameplay:
@@ -81,6 +82,24 @@ public class GameController : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void BuyCannon(int index)
+    {
+        CannonChangePanel cannonChangPanel = UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().cannonPanel.GetComponent<CannonChangePanel>();
+        List<CanonButtonSO> cannons = cannonChangPanel.cannons;
+
+        CanonButtonSO cannonData = cannons[index];
+        if (!cannonData.isPurchased && DataManager.Instance.diamond >= cannonData.price)
+        {
+            cannonData.isPurchased = true;
+            DataManager.Instance.diamond -= cannonData.price;
+            OnBuyClick.Invoke();
+        }
+        else
+        {
+            //Debug.Log("Không đủ tiền");
+        }
     }
     public int CurrentLevel
     {

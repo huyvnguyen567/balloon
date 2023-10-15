@@ -1,15 +1,21 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Canon : MonoBehaviour
 {
+    public bool isAnim = false;
     [SerializeField] private float moveSpeed = 15f;
     [SerializeField] private float rotateWheelSpeed = 4000f;
 
     [SerializeField] private Transform leftWheel;
     [SerializeField] private Transform rightWheel;
+
+    [SerializeField] HingeJoint2D[] wheels;
+    JointMotor2D motor;
+    public float velocityX;
+    private float screenBounds;
 
     [SerializeField] private float fireRate = 0.2f;
 
@@ -26,39 +32,50 @@ public class Canon : MonoBehaviour
         cam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         pos = rb.position;
+        motor = wheels[0].motor;
+        screenBounds = GameController.Instance.ScreenWidth - 0.56f;
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!isAnim)
         {
-            isMoving = true;
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            isMoving = false;
-        }
-
-        if (isMoving)
-        {
-            pos.x = cam.ScreenToWorldPoint(Input.mousePosition).x;
-
-            float mouseX = Input.GetAxis("Mouse X");
-            RotateWheel(mouseX);
-
-            fireTimer += Time.deltaTime;
-            if (fireTimer >= fireRate)
+            if (Input.GetMouseButtonDown(0))
             {
-                Fire();
-                fireTimer = 0;
+                isMoving = true;
             }
 
-            float currentX = transform.position.x;
-            float minX = - GameController.Instance.ScreenWidth + GetComponent<Collider2D>().bounds.size.x / 2;
-            float maxX = GameController.Instance.ScreenWidth - GetComponent<Collider2D>().bounds.size.x / 2;
-            currentX = Mathf.Clamp(currentX, minX, maxX);
-            transform.position = new Vector2(currentX, transform.position.y);
+            if (Input.GetMouseButtonUp(0))
+            {
+                isMoving = false;
+            }
+
+            if (isMoving)
+            {
+                pos.x = cam.ScreenToWorldPoint(Input.mousePosition).x;
+
+                float mouseX = Input.GetAxis("Mouse X");
+                //RotateWheel(mouseX);
+
+                fireTimer += Time.deltaTime;
+                if (fireTimer >= fireRate)
+                {
+                    Fire();
+                    fireTimer = 0;
+                }
+
+                //float currentX = transform.position.x;
+                //float minX = -GameController.Instance.ScreenWidth + GetComponent<Collider2D>().bounds.size.x / 2;
+                //float maxX = GameController.Instance.ScreenWidth - GetComponent<Collider2D>().bounds.size.x / 2;
+                //currentX = Mathf.Clamp(currentX, minX, maxX);
+                //transform.position = new Vector2(currentX, transform.position.y);
+            }
         }
+        else
+        {
+            //float mouseX = UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().battleTutorialPanelScript.cannon.transform.position.x;
+            //RotateWheel((float)-mouseX / 50);
+        }
+        
     }
 
     private void FixedUpdate()
@@ -71,6 +88,28 @@ public class Canon : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
         }
+        //Rotate wheels
+        velocityX = (rb.position / Time.fixedDeltaTime).x;
+   
+        if (Mathf.Abs(velocityX) > 0.0f && Mathf.Abs(rb.position.x) < screenBounds)
+        {
+            motor.motorSpeed = velocityX ;
+            MotorActivate(true);
+        }
+        else
+        {
+            motor.motorSpeed = 0f;
+            MotorActivate(false);
+        }
+    }
+
+    void MotorActivate(bool isActive)
+    {
+        wheels[0].useMotor = isActive;
+        wheels[1].useMotor = isActive;
+
+        wheels[0].motor = motor;
+        wheels[1].motor = motor;
     }
 
     public void RotateWheel(float rotationValue)

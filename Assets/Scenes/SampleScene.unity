@@ -241,10 +241,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bigMainMenuPanel: {fileID: 0}
   processTaskPopup: {fileID: 0}
+  cannonBuyPopup: {fileID: 0}
   parentWindow: {fileID: 140713506}
   parentPopup: {fileID: 2103965934}
   bigMainMenuPanelPrefab: {fileID: 6178467960026298923, guid: 1734edc76310c9748be79486579950a8, type: 3}
   processTaskPopupPrefab: {fileID: 5843031013840454159, guid: 9801382d1cddab94faa97ee17236a9df, type: 3}
+  cannonBuyPopupPrefab: {fileID: 7233989536032589989, guid: 6d00fcf5d8eec8d4f92eda16db28ff05, type: 3}
 --- !u!1 &47649128
 GameObject:
   m_ObjectHideFlags: 0
@@ -1783,6 +1785,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: b43e13489ebf4f04eb9846689d17140b, type: 2}
     chance: 0.1
     cost: 0
+  diamond: 1700
 --- !u!4 &1969367804
 Transform:
   m_ObjectHideFlags: 0
