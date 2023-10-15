@@ -23,7 +23,8 @@ public class DataManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            PlayerPrefs.SetInt("PointsInOneGame", 0);
+            PlayerPrefs.SetInt(TaskType.PointsInOneGame.ToString(), 0);
+            PlayerPrefs.SetInt(TaskType.DaysConsecutive.ToString(), 3);
         }
     }
     private void Start()

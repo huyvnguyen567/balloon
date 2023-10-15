@@ -82,18 +82,24 @@ public class Canon : MonoBehaviour
     {
         if (isMoving)
         {
-            rb.MovePosition(Vector2.Lerp(rb.position, pos, moveSpeed * Time.fixedDeltaTime));
+            Vector2 newPosition = Vector2.Lerp(rb.position, pos, moveSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(newPosition);
         }
         else
         {
             rb.velocity = Vector2.zero;
         }
-        //Rotate wheels
-        velocityX = (rb.position / Time.fixedDeltaTime).x;
-   
+
+        // Tính toán vận tốc dựa trên sự thay đổi vị trí trong các frame
+        Vector2 deltaPosition = (rb.position - pos) / Time.fixedDeltaTime;
+        velocityX = deltaPosition.x;
+        if (!isAnim)
+        {
+            velocityX = -velocityX;
+        }
         if (Mathf.Abs(velocityX) > 0.0f && Mathf.Abs(rb.position.x) < screenBounds)
         {
-            motor.motorSpeed = velocityX ;
+            motor.motorSpeed = velocityX * 50f;
             MotorActivate(true);
         }
         else
@@ -101,6 +107,9 @@ public class Canon : MonoBehaviour
             motor.motorSpeed = 0f;
             MotorActivate(false);
         }
+
+        // Cập nhật giá trị pos
+        pos = rb.position;
     }
 
     void MotorActivate(bool isActive)
