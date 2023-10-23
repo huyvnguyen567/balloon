@@ -38,6 +38,7 @@ public class Bullet : MonoBehaviour
             if (ball != null)
             {
                 ball.TakeDamage(damage);
+
             }
             ObjectPool.Instance.ReturnObjectToPool("Bullet", gameObject);
         }

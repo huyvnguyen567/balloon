@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 public class BallFissionable : Ball
 {
     [SerializeField] private GameObject ballPrefab;
+
+    public static UnityEvent UpdateProcessEvent = new UnityEvent();
+
     override protected void Die()
     {
         ObjectPool.Instance.ReturnObjectToPool("Ball", gameObject);
@@ -18,6 +22,8 @@ public class BallFissionable : Ball
         else
         {
             DropItem();
+            GameController.Instance.ballSize1DestroyedCount++;
+            UpdateProcessEvent.Invoke();
         }
     }
 

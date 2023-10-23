@@ -5,9 +5,14 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
+
+    [HideInInspector]
     public GameObject bigMainMenuPanel;
+    public GameObject gamePlayWindow;
     public GameObject processTaskPopup;
     public GameObject cannonBuyPopup;
+    public GameObject levelupPopup;
+    public GameObject losePopup;
 
     [Header("Parent Transform")]
     [SerializeField] private GameObject parentWindow;
@@ -15,8 +20,11 @@ public class UIManager : MonoBehaviour
 
     [Header("Prefab")]
     public GameObject bigMainMenuPanelPrefab;
+    public GameObject gamePlayWindowPrefab;
     public GameObject processTaskPopupPrefab;
     public GameObject cannonBuyPopupPrefab;
+    public GameObject levelupPopupPrefab;
+    public GameObject losePopupPrefab;
 
     void Awake()
     {

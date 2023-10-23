@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-//using System;
+using UnityEngine.Events;
 
 public class Ball : MonoBehaviour
 {
@@ -25,6 +25,8 @@ public class Ball : MonoBehaviour
 
     public float initHealth;
     public int initSize;
+
+    public static UnityEvent UpdateScoreEvent = new UnityEvent();
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -53,7 +55,7 @@ public class Ball : MonoBehaviour
             rb.velocity = new Vector2(-direction, 0);
             Invoke("FallDown", Random.Range(minDelayShowing, maxDelayShowing));
         }
-   
+
     }
     private void FallDown()
     {
@@ -65,6 +67,7 @@ public class Ball : MonoBehaviour
     {
         if (collision.CompareTag("Cannon"))
         {
+            GameController.Instance.SwitchGameState(GameController.GameState.Lose);
             //Debug.Log("game over");
         }
         else if (!isShowing && collision.CompareTag("Wall"))
@@ -85,11 +88,19 @@ public class Ball : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             rb.AddTorque(rb.angularVelocity);
         }
-    }
+        else if (collision.CompareTag("Top"))
+        {
+            rb.AddForce(Vector2.up);
+        }
+    } 
 
     public void TakeDamage(float damage)
     {
         health -= damage;
+        DataManager.Instance.score += damage;
+        DataManager.Instance.SaveHighScore();
+        
+        UpdateScoreEvent.Invoke();
         if (health < 1)
         {
             Die();
@@ -114,21 +125,18 @@ public class Ball : MonoBehaviour
     public Color GetHealthColor(int level, int health)
     {
         int colorsCount = ballColors.Count;
+        int colorIndex = 0;
 
-        int colorIndex;
-        if(health > 1 && health < 10)
+        if (health > 1 && health < colorsCount + 1)
         {
             colorIndex = health - 1;
         }
-        else
+        else if (health > colorsCount)
         {
             // Tính toán chỉ số màu dựa trên số lượng máu và level
-            colorIndex = (health - 1) / (level);
-            if (colorIndex > colorsCount - 1)
-            {
-                colorIndex = colorIndex % colorsCount;
-            }
-        } 
+            colorIndex = (health - 1) / level % colorsCount;
+        }
+
         return ballColors[colorIndex];
     }
 

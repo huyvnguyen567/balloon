@@ -26,6 +26,10 @@ public class GameController : MonoBehaviour
     public SpriteRenderer background;
     public GameObject cannonPrefab;
 
+    public int ballSize1DestroyedCount;
+    public float targetProcess;
+   
+
     private void Awake()
     {
         if (Instance == null)
@@ -33,9 +37,16 @@ public class GameController : MonoBehaviour
             Instance = this;
         }
         ScreenWidth = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
+
     }
+
+   
     private void Start()
     {
+        DataManager.Instance.LoadLevel();
+        DataManager.Instance.LoadScore();
+        DataManager.Instance.LoadHighScore();
+        StartLevel(currentLevel);
         SwitchGameState(GameState.MainMenu);
     }
   
@@ -53,19 +64,35 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameState.Gameplay:
-                // Xử lý khi chuyển sang Gameplay
+                UIManager.Instance.gamePlayWindow = UIManager.Instance.Spawn(UIType.Window, UIManager.Instance.gamePlayWindowPrefab);
+                UpdateProcessGame();
+
                 break;
             case GameState.Pause:
                 // Xử lý khi dừng game
                 break;
             case GameState.Lose:
-                // Xử lý khi chuyển sang Lose
+                if (UIManager.Instance.losePopup == null)
+                {
+                    UIManager.Instance.losePopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.losePopupPrefab);
+                }
+
                 break;
             case GameState.Win:
-                // Xử lý khi chuyển sang Win
+                UIManager.Instance.levelupPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.levelupPopupPrefab);
                 break;
         }
         currentGameState = newState;
+    }
+
+    public void StartLevel(int level)
+    {
+        LevelSO.Level levelData = DataManager.Instance.levelData.levels[level];
+
+        currentLevel = levelData.level;
+        BallSpawner.Instance.ballsCount = levelData.numberOfMeteor;
+        BallSpawner.Instance.minHealth = levelData.minHealth;
+        BallSpawner.Instance.maxHealth = levelData.maxHealth;
     }
     public ItemData GetRandomItem()
     {
@@ -84,6 +111,15 @@ public class GameController : MonoBehaviour
         return null;
     }
 
+    public void UpdateProcessGame()
+    {
+        foreach(GameObject ball in BallSpawner.Instance.balls)
+        {
+            targetProcess += Mathf.Pow(2, ball.GetComponent<BallFissionable>().size - 1);
+        }
+
+    }
+
     public void BuyCannon(int index)
     {
         CannonChangePanel cannonChangPanel = UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().cannonPanel.GetComponent<CannonChangePanel>();
@@ -98,7 +134,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Không đủ tiền");
+            Debug.Log("Không đủ tiền");
         }
     }
     public int CurrentLevel

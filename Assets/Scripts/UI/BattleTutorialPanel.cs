@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.EventSystems;
 
 public class BattleTutorialPanel : BaseUI, IPointerDownHandler
@@ -9,7 +10,10 @@ public class BattleTutorialPanel : BaseUI, IPointerDownHandler
     public GameObject mouseHighLight;
     public bool hasBeenClicked = false; // Biến để kiểm tra đã nhấp chuột lần đầu hay chưa
     private bool isCannonCreated = false;
-    GameObject cannonClone;
+    public TMP_Text levelText;
+    public TMP_Text highScoreText;
+
+    private GameObject cannonClone;
 
     void OnEnable()
     {
@@ -19,15 +23,21 @@ public class BattleTutorialPanel : BaseUI, IPointerDownHandler
             //cannonClone.transform.localScale = new Vector3(52, 52, 1);
             cannonClone.GetComponent<Canon>().isAnim = true;
             isCannonCreated = true;
+            highScoreText.text = $"Best score: {(int)DataManager.Instance.highScore}";
+            levelText.text = $"Level {GameController.Instance.CurrentLevel}";
         }
         GameController.Instance.onStartGame.AddListener(Hide);
-       
     }
+   
     private void Update()
     {
-        Vector3 newPosition = cannonClone.transform.position;
-        newPosition.x = mouseHighLight.transform.position.x;
-        cannonClone.transform.position = newPosition;
+        if (cannonClone != null)
+        {
+            Vector3 newPosition = cannonClone.transform.position;
+            newPosition.x = mouseHighLight.transform.position.x;
+            cannonClone.transform.position = newPosition;
+        }
+      
     }
     private void OnDisable()
     {

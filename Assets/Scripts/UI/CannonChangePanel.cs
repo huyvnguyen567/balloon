@@ -66,7 +66,6 @@ public class CannonChangePanel : MonoBehaviour
 
     public void UpdateCannonButton(int index)
     {
-        Debug.Log("da update");
         Image cannonImage = buttonsList[index].transform.GetChild(0).GetComponent<Image>();
         Transform diamond = buttonsList[index].transform.GetChild(1);
 

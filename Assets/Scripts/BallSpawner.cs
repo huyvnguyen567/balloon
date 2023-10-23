@@ -6,11 +6,12 @@ public class BallSpawner : MonoBehaviour
 {
     public static BallSpawner Instance;
 
-    [SerializeField] private int ballsCount;
+    public int ballsCount;
     [SerializeField] private float spawnDelay;
-    [SerializeField] private int maxHealth;
+    public int maxHealth;
+    public int minHealth;
 
-    private GameObject[] balls;
+    public GameObject[] balls;
 
     private void Awake()
     {
@@ -41,7 +42,7 @@ public class BallSpawner : MonoBehaviour
             balls[i] = ObjectPool.Instance.GetObjectFromPool("Ball");
             BallFissionable ball = balls[i].GetComponent<BallFissionable>();
             ball.size = Random.Range(1, 5);
-            ball.health = Random.Range(1, maxHealth);
+            ball.health = Random.Range(minHealth, maxHealth + 1);
             ball.isResultOfFission = false;
             balls[i].SetActive(false);
         }

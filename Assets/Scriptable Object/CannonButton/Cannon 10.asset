@@ -16,4 +16,4 @@ MonoBehaviour:
   price: 750
   isPurchased: 0
   sprite: {fileID: -1400070663, guid: 0354b21be03717344a2d23100bfa60df, type: 3}
-  prefab: {fileID: 0}
+  prefab: {fileID: 118981354780877801, guid: d4e9ad91593409d4583fb8a000c390b6, type: 3}

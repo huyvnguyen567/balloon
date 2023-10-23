@@ -37,45 +37,50 @@ public class Canon : MonoBehaviour
     }
     void Update()
     {
-        if (!isAnim)
+        if(GameController.Instance.currentGameState == GameController.GameState.Gameplay)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!isAnim)
             {
-                isMoving = true;
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                isMoving = false;
-            }
-
-            if (isMoving)
-            {
-                pos.x = cam.ScreenToWorldPoint(Input.mousePosition).x;
-
-                float mouseX = Input.GetAxis("Mouse X");
-                //RotateWheel(mouseX);
-
-                fireTimer += Time.deltaTime;
-                if (fireTimer >= fireRate)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    Fire();
-                    fireTimer = 0;
+                    isMoving = true;
                 }
 
-                //float currentX = transform.position.x;
-                //float minX = -GameController.Instance.ScreenWidth + GetComponent<Collider2D>().bounds.size.x / 2;
-                //float maxX = GameController.Instance.ScreenWidth - GetComponent<Collider2D>().bounds.size.x / 2;
-                //currentX = Mathf.Clamp(currentX, minX, maxX);
-                //transform.position = new Vector2(currentX, transform.position.y);
+                if (Input.GetMouseButtonUp(0))
+                {
+                    isMoving = false;
+                }
+
+                if (isMoving)
+                {
+                    pos.x = cam.ScreenToWorldPoint(Input.mousePosition).x;
+
+                    float mouseX = Input.GetAxis("Mouse X");
+                    //RotateWheel(mouseX);
+
+                    fireTimer += Time.deltaTime;
+                    if (fireTimer >= fireRate)
+                    {
+                        Fire();
+                        fireTimer = 0;
+                    }
+
+                    //float currentX = transform.position.x;
+                    //float minX = -GameController.Instance.ScreenWidth + GetComponent<Collider2D>().bounds.size.x / 2;
+                    //float maxX = GameController.Instance.ScreenWidth - GetComponent<Collider2D>().bounds.size.x / 2;
+                    //currentX = Mathf.Clamp(currentX, minX, maxX);
+                    //transform.position = new Vector2(currentX, transform.position.y);
+                }
+            }
+            else
+            {
+                //float mouseX = UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().battleTutorialPanelScript.cannon.transform.position.x;
+                //RotateWheel((float)-mouseX / 50);
             }
         }
-        else
-        {
-            //float mouseX = UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().battleTutorialPanelScript.cannon.transform.position.x;
-            //RotateWheel((float)-mouseX / 50);
-        }
         
+
+
     }
 
     private void FixedUpdate()

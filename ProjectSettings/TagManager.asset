@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Cannon
   - Coin
+  - Top
   layers:
   - Default
   - TransparentFX

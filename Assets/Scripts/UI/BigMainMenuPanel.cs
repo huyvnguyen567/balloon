@@ -93,6 +93,11 @@ public class BigMainMenuPanel : MonoBehaviour
             Instantiate(GameController.Instance.cannonPrefab, battleTutorialPanelScript.cannon.transform.position, Quaternion.identity);
             battleTutorialPanelScript.hasBeenClicked = false;
             bottomPanel.SetActive(false);
+            GameController.Instance.SwitchGameState(GameController.GameState.Gameplay);
+        }
+        else
+        {
+            battleTutorialPanelScript.hasBeenClicked = false;
         }
     }
 }
