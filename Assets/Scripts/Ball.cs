@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
+using DG.Tweening;
 
 public class Ball : MonoBehaviour
 {
@@ -97,6 +98,7 @@ public class Ball : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        DataManager.Instance.previousScore = DataManager.Instance.score;
         DataManager.Instance.score += damage;
         DataManager.Instance.SaveHighScore();
         

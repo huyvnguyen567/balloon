@@ -14,6 +14,8 @@ public class Bullet : MonoBehaviour
     private void OnEnable()
     {
         _spawnTime = Time.time;
+        damage = DataManager.Instance.fireDamage;
+        moveSpeed = DataManager.Instance.fireBulletSpeed;        
     }
 
     private void Start()

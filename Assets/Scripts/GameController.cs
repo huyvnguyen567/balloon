@@ -117,7 +117,6 @@ public class GameController : MonoBehaviour
         {
             targetProcess += Mathf.Pow(2, ball.GetComponent<BallFissionable>().size - 1);
         }
-
     }
 
     public void BuyCannon(int index)

@@ -17,7 +17,7 @@ public class Canon : MonoBehaviour
     public float velocityX;
     private float screenBounds;
 
-    [SerializeField] private float fireRate = 0.2f;
+    [SerializeField] private float fireRateTime = 0.2f;
 
     private float fireTimer = 0;
 
@@ -27,6 +27,10 @@ public class Canon : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 pos;
 
+    private void OnEnable()
+    {
+        fireRateTime = DataManager.Instance.fireRateTime;
+    }
     private void Start()
     {
         cam = Camera.main;
@@ -59,7 +63,7 @@ public class Canon : MonoBehaviour
                     //RotateWheel(mouseX);
 
                     fireTimer += Time.deltaTime;
-                    if (fireTimer >= fireRate)
+                    if (fireTimer >= fireRateTime)
                     {
                         Fire();
                         fireTimer = 0;

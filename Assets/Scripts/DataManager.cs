@@ -17,9 +17,20 @@ public class DataManager : MonoBehaviour
     public List<ItemData> items = new List<ItemData>();
     public LevelSO levelData;
 
-    public int diamond = 1700;
     public float highScore;
     public float score;
+    public float previousScore;
+
+    public int diamond = 1700;
+    public int coin = 1000;
+
+    [Header("Upgrade")]
+    public float fireRateTime = 0.2f;
+    public float fireBulletSpeed = 10f;
+    public float fireDamage = 1;
+
+    public int upgradeFireSpeedCost = 1;
+    public int upgradeFirePowerCost = 1;
 
 
     private void Awake()
@@ -43,9 +54,7 @@ public class DataManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("CurrentLevel"))
         {
-            // Lấy thông tin cấp độ từ PlayerPrefs
             GameController.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
-
         }
         else
         {
@@ -54,9 +63,7 @@ public class DataManager : MonoBehaviour
     }
     public void SaveScore()
     {
-        // Lưu thông tin cấp độ hiện tại vào PlayerPrefs
         PlayerPrefs.SetFloat("Score", score);
-        // Lưu PlayerPrefs
         PlayerPrefs.Save();
     }
 
@@ -64,7 +71,6 @@ public class DataManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("Score"))
         {
-            // Lấy thông tin cấp độ từ PlayerPrefs
             score = PlayerPrefs.GetFloat("Score");
 
         }
@@ -93,5 +99,37 @@ public class DataManager : MonoBehaviour
         }
     }
 
-  
+    public void SaveUpgradeData()
+    {
+        PlayerPrefs.SetFloat("FireRateTime", fireRateTime);
+        PlayerPrefs.SetFloat("FireBulletSpeed", fireBulletSpeed);
+        PlayerPrefs.SetFloat("FireDamage", fireDamage);
+        PlayerPrefs.SetInt("UpgradeFireSpeedCost", upgradeFireSpeedCost);
+        PlayerPrefs.SetInt("UpgradeFirePowerCost", upgradeFirePowerCost);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadUpgradeData()
+    {
+        if (PlayerPrefs.HasKey("FireRateTime"))
+        {
+            fireRateTime = PlayerPrefs.GetFloat("FireRateTime");
+        }
+        if (PlayerPrefs.HasKey("FireBulletSpeed"))
+        {
+            fireBulletSpeed = PlayerPrefs.GetFloat("FireBulletSpeed");
+        }
+        if (PlayerPrefs.HasKey("FireDamage"))
+        {
+            fireDamage = PlayerPrefs.GetFloat("FireDamage");
+        }
+        if (PlayerPrefs.HasKey("UpgradeFireSpeedCost"))
+        {
+            upgradeFireSpeedCost = PlayerPrefs.GetInt("UpgradeFireSpeedCost");
+        }
+        if (PlayerPrefs.HasKey("UpgradeFirePowerCost"))
+        {
+            upgradeFirePowerCost = PlayerPrefs.GetInt("UpgradeFirePowerCost");
+        }
+    }
 }

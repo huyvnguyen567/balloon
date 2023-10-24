@@ -1035,9 +1035,16 @@ MonoBehaviour:
     chance: 0.1
     cost: 0
   levelData: {fileID: 11400000, guid: 21ea731366cb9624eaa9ccc05a242de2, type: 2}
-  diamond: 1700
   highScore: 0
   score: 0
+  previousScore: 0
+  diamond: 1700
+  coin: 1000
+  fireRateTime: 0.3
+  fireBulletSpeed: 22
+  fireDamage: 1
+  upgradeFireSpeedCost: 1
+  upgradeFirePowerCost: 1
 --- !u!4 &1969367804
 Transform:
   m_ObjectHideFlags: 0
