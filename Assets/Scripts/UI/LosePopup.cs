@@ -9,13 +9,17 @@ public class LosePopup : MonoBehaviour
 {
     public Button menuButton;
     public Button replayButton;
+    public Button okButton;
     public TMP_Text levelText;
     public TMP_Text scoreText;
 
     private void OnEnable()
     {
-        menuButton.onClick.AddListener(LoadScene);
-
+        okButton.onClick.AddListener(LoadScene);
+        DataManager.Instance.numberOfGamesPlayed++;
+        DataManager.Instance.SaveTaskTypeData(TaskType.GamesPlayed, DataManager.Instance.numberOfGamesPlayed);
+        DataManager.Instance.SaveLevel();
+        PlayerPrefs.DeleteKey("Score");
     }
     void Start()
     {
@@ -26,12 +30,9 @@ public class LosePopup : MonoBehaviour
     }
     public void LoadScene()
     {
-        DataManager.Instance.SaveLevel();
-        PlayerPrefs.DeleteKey("Score");
         SceneManager.LoadScene(0);
     }
 
-    // Update is called once per frame
     void Update()
     {
 

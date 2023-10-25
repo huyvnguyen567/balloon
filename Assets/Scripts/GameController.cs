@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 
 
@@ -37,15 +38,28 @@ public class GameController : MonoBehaviour
             Instance = this;
         }
         ScreenWidth = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
-
     }
 
-   
     private void Start()
     {
+        onStartGame.AddListener(delegate
+        {  // Lấy vị trí hiện tại của camera
+            Vector3 currentPosition = Camera.main.transform.position;
+
+            // Điểm đến là new Vector3(0, 0, -10)
+            Vector3 targetPosition = new Vector3(0, 0, -10);
+
+            // Sử dụng DOTween để di chuyển mượt mà
+            Camera.main.transform.DOMove(targetPosition, 0.5f).SetEase(Ease.Linear);
+        });
+
         DataManager.Instance.LoadLevel();
         DataManager.Instance.LoadScore();
         DataManager.Instance.LoadHighScore();
+        DataManager.Instance.LoadCoin();
+        DataManager.Instance.LoadNumberOfGamesPlayed();
+        DataManager.Instance.LoadBallDestroyedCount();
+
         StartLevel(currentLevel);
         SwitchGameState(GameState.MainMenu);
     }
@@ -59,6 +73,7 @@ public class GameController : MonoBehaviour
                 UIManager.Instance.bigMainMenuPanel = UIManager.Instance.Spawn(UIType.Window, UIManager.Instance.bigMainMenuPanelPrefab);
                 UIManager.Instance.processTaskPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.processTaskPopupPrefab);
                 UIManager.Instance.cannonBuyPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.cannonBuyPopupPrefab);
+                UIManager.Instance.menuContentPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.menuContentPopupPrefab);
                 UIManager.Instance.processTaskPopup.SetActive(false);
                 UIManager.Instance.cannonBuyPopup.SetActive(false);
                 break;
@@ -79,7 +94,10 @@ public class GameController : MonoBehaviour
 
                 break;
             case GameState.Win:
-                UIManager.Instance.levelupPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.levelupPopupPrefab);
+                if(UIManager.Instance.levelupPopup == null)
+                {
+                    UIManager.Instance.levelupPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.levelupPopupPrefab);
+                }
                 break;
         }
         currentGameState = newState;

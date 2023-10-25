@@ -101,7 +101,7 @@ public class Ball : MonoBehaviour
         DataManager.Instance.previousScore = DataManager.Instance.score;
         DataManager.Instance.score += damage;
         DataManager.Instance.SaveHighScore();
-        
+        DataManager.Instance.SaveTaskTypeData(TaskType.PointsInOneGame, (int)DataManager.Instance.highScore);
         UpdateScoreEvent.Invoke();
         if (health < 1)
         {

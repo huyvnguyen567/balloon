@@ -302,6 +302,7 @@ MonoBehaviour:
   cannonBuyPopup: {fileID: 0}
   levelupPopup: {fileID: 0}
   losePopup: {fileID: 0}
+  menuContentPopup: {fileID: 0}
   parentWindow: {fileID: 140713506}
   parentPopup: {fileID: 2103965934}
   bigMainMenuPanelPrefab: {fileID: 6178467960026298923, guid: 1734edc76310c9748be79486579950a8, type: 3}
@@ -310,6 +311,7 @@ MonoBehaviour:
   cannonBuyPopupPrefab: {fileID: 7233989536032589989, guid: 6d00fcf5d8eec8d4f92eda16db28ff05, type: 3}
   levelupPopupPrefab: {fileID: 8599560844904503515, guid: 4b934de553179054589fd4ed8140569b, type: 3}
   losePopupPrefab: {fileID: 3178363865914466323, guid: aad713fc1ff99d64a8faf5dbafab9f18, type: 3}
+  menuContentPopupPrefab: {fileID: 5844909424060405969, guid: 0f81b68eee145314492cdaedd8d014a2, type: 3}
 --- !u!1 &47649128
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,7 +623,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -4, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

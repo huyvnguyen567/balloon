@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BigMainMenuPanel : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class BigMainMenuPanel : MonoBehaviour
     public GameObject battleTutorialPanel;
     public GameObject cannonPanel;
 
-    //Top Panel
+    //Bottom Panel
     [SerializeField] private Button themeButton;
     [SerializeField] private Button cannonButton;
     [SerializeField] private Button battleButton;
@@ -25,8 +26,11 @@ public class BigMainMenuPanel : MonoBehaviour
     private Color selectedColor = new Color(0.8f, 0.7f, 0.4f, 1f);
     private Button currentSelectedButton;
 
+    //Top Panel
+    [SerializeField] private TMP_Text coinText;
     private void OnEnable()
     {
+        UpdateCoinText();
         themePanel.SetActive(false);
         cannonPanel.SetActive(false);
         OnClickChangeColorEvent(themeButton);
@@ -37,14 +41,36 @@ public class BigMainMenuPanel : MonoBehaviour
         themeButton.onClick.AddListener(() => OnThemeEventClick());
         battleButton.onClick.AddListener(() => OnBattleEventClick());
         cannonButton.onClick.AddListener(() => OnCannonEventClick());
+
+        GameController.Instance.onStartGame.AddListener(delegate { 
+            bottomPanel.SetActive(false);
+            battleTutorialPanel.SetActive(false);
+        });
+
     }
-   
+
+    //private void Update()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        OnPlayEventClick();
+    //    }
+    //}
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!battleTutorialPanel.activeInHierarchy)
         {
-            OnPlayEventClick();
+            UIManager.Instance.menuContentPopup.SetActive(false);
         }
+        else
+        {
+            UIManager.Instance.menuContentPopup.SetActive(true);
+        }
+    }
+
+    public void UpdateCoinText()
+    {
+        coinText.text = $"{DataManager.Instance.coin}";
     }
     public void OnClickChangeColorEvent(Button button)
     {
@@ -85,19 +111,19 @@ public class BigMainMenuPanel : MonoBehaviour
         battleTutorialPanel.SetActive(false);
         rightPanel.SetActive(false);
     }
-    public void OnPlayEventClick()
-    {
-        if(battleTutorialPanelScript.hasBeenClicked && GameController.Instance.currentGameState == GameController.GameState.MainMenu)
-        {
-            GameController.Instance.onStartGame.Invoke();
-            Instantiate(GameController.Instance.cannonPrefab, battleTutorialPanelScript.cannon.transform.position, Quaternion.identity);
-            battleTutorialPanelScript.hasBeenClicked = false;
-            bottomPanel.SetActive(false);
-            GameController.Instance.SwitchGameState(GameController.GameState.Gameplay);
-        }
-        else
-        {
-            battleTutorialPanelScript.hasBeenClicked = false;
-        }
-    }
+    //public void OnPlayEventClick()
+    //{
+    //    if(battleTutorialPanelScript.hasBeenClicked && GameController.Instance.currentGameState == GameController.GameState.MainMenu)
+    //    {
+    //        GameController.Instance.onStartGame.Invoke();
+    //        Instantiate(GameController.Instance.cannonPrefab, battleTutorialPanelScript.cannon.transform.position, Quaternion.identity);
+    //        battleTutorialPanelScript.hasBeenClicked = false;
+    //        bottomPanel.SetActive(false);
+    //        GameController.Instance.SwitchGameState(GameController.GameState.Gameplay);
+    //    }
+    //    else
+    //    {
+    //        battleTutorialPanelScript.hasBeenClicked = false;
+    //    }
+    //}
 }

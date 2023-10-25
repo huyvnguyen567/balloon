@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BattleTutorialPanel : BaseUI, IPointerDownHandler
+public class BattleTutorialPanel : BaseUI
 {
     public GameObject cannon;
     public GameObject mouseHighLight;
@@ -31,20 +31,20 @@ public class BattleTutorialPanel : BaseUI, IPointerDownHandler
 
     void OnEnable()
     {
-        if (!isCannonCreated)
-        {
-            cannonClone = Instantiate(GameController.Instance.cannonPrefab, cannon.transform.position, Quaternion.identity);
-            //cannonClone.transform.localScale = new Vector3(52, 52, 1);
-            cannonClone.GetComponent<Canon>().isAnim = true;
-            isCannonCreated = true;
-            highScoreText.text = $"Best score: {(int)DataManager.Instance.highScore}";
-            levelText.text = $"Level {GameController.Instance.CurrentLevel}";
-        }
+        //if (!isCannonCreated)
+        //{
+        //    cannonClone = Instantiate(GameController.Instance.cannonPrefab, cannon.transform.position, Quaternion.identity);
+        //    //cannonClone.transform.localScale = new Vector3(52, 52, 1);
+        //    cannonClone.GetComponent<Canon>().isAnim = true;
+        //    isCannonCreated = true;
+        //    highScoreText.text = $"Best score: {(int)DataManager.Instance.highScore}";
+        //    levelText.text = $"Level {GameController.Instance.CurrentLevel}";
+        //}
 
+        //GameController.Instance.onStartGame.AddListener(Hide);
         DataManager.Instance.LoadUpgradeData();
-        GameController.Instance.onStartGame.AddListener(Hide);
 
-        for(int i = 0; i< upgradeButtons.Length; i++)
+        for (int i = 0; i< upgradeButtons.Length; i++)
         {
             int buttonIndex = i;
             upgradeButtons[i].onClick.AddListener(() => ActivateContent(buttonIndex));
@@ -53,21 +53,20 @@ public class BattleTutorialPanel : BaseUI, IPointerDownHandler
         upgradeFireSpeed.onClick.AddListener(() => UpgradeFireSpeed());
         upgradeFirePower.onClick.AddListener(() => UpgradeFirePower());
 
-        UpdateFireSpeedUI();
-        UpdateFirePowerUI();
     }
     private void Start()
     {
+        UpdateFireSpeedUI();
+        UpdateFirePowerUI();
     }
     private void Update()
     {
-        if (cannonClone != null)
-        {
-            Vector3 newPosition = cannonClone.transform.position;
-            newPosition.x = mouseHighLight.transform.position.x;
-            cannonClone.transform.position = newPosition;
-        }
-      
+        //if (cannonClone != null)
+        //{
+        //    Vector3 newPosition = cannonClone.transform.position;
+        //    newPosition.x = mouseHighLight.transform.position.x;
+        //    cannonClone.transform.position = newPosition;
+        //}   
     }
 
     public void UpgradeFireSpeed()
@@ -79,8 +78,10 @@ public class BattleTutorialPanel : BaseUI, IPointerDownHandler
             fireRate += 1.5f;
             DataManager.Instance.fireRateTime = 1 / fireRate;
             DataManager.Instance.upgradeFireSpeedCost += 3;
-            UpdateFireSpeedUI();
             DataManager.Instance.SaveUpgradeData();
+            DataManager.Instance.SaveCoin();
+            UpdateFireSpeedUI();
+            UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().UpdateCoinText();
         }
         else
         {
@@ -95,6 +96,7 @@ public class BattleTutorialPanel : BaseUI, IPointerDownHandler
         float dps = DataManager.Instance.fireDamage * fireRate / (21 / DataManager.Instance.fireBulletSpeed);
         fireSpeedText.text = $"{Mathf.Round(dps * 10) / 10.0f} dps";
         fireSpeedCostText.text = $"{DataManager.Instance.upgradeFireSpeedCost}";
+        DataManager.Instance.SaveTaskTypeData(TaskType.FireUpgradeSpeed, Mathf.Round(dps * 10) / 10.0f);
     }
 
 
@@ -105,10 +107,11 @@ public class BattleTutorialPanel : BaseUI, IPointerDownHandler
             DataManager.Instance.coin -= DataManager.Instance.upgradeFirePowerCost;
             DataManager.Instance.fireDamage += 0.1f;
             DataManager.Instance.upgradeFirePowerCost += 3;
+            DataManager.Instance.SaveUpgradeData();
+            DataManager.Instance.SaveCoin();
             UpdateFirePowerUI();
             UpdateFireSpeedUI();
-            DataManager.Instance.SaveUpgradeData();
-
+            UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().UpdateCoinText();
         }
         else
         {
@@ -120,6 +123,7 @@ public class BattleTutorialPanel : BaseUI, IPointerDownHandler
     {
         firePowerText.text = $"{DataManager.Instance.fireDamage * 100}%";
         firePowerCostText.text = $"{DataManager.Instance.upgradeFirePowerCost}";
+        DataManager.Instance.SaveTaskTypeData(TaskType.FireUpgradePower, DataManager.Instance.fireDamage * 100);
     }
     public void ActivateContent(int contentIndex)
     {
@@ -133,15 +137,19 @@ public class BattleTutorialPanel : BaseUI, IPointerDownHandler
         upgradePanel.transform.GetChild(contentIndex).gameObject.SetActive(true);
 
     }
+    //private void OnDisable()
+    //{
+    //    GameController.Instance.onStartGame.RemoveListener(Hide);
+    //    Destroy(cannonClone);
+    //    isCannonCreated = false;
+    //}
+    //public void OnPointerDown(PointerEventData eventData)
+    //{
+    //    hasBeenClicked = true;
+    //}
     private void OnDisable()
     {
-        GameController.Instance.onStartGame.RemoveListener(Hide);
-        Destroy(cannonClone);
-        isCannonCreated = false;
+        upgradeFireSpeed.onClick.RemoveAllListeners();
+        upgradeFirePower.onClick.RemoveAllListeners();
     }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        hasBeenClicked = true;
-    }
-
 }

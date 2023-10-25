@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Task 5
   m_EditorClassIdentifier: 
   taskName: Upgrade fire speed to 50 bps
-  taskType: 2
+  taskType: 3
   requiredValue: 50
+  currentValue: 3.5

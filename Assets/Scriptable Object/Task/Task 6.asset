@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Task 6
   m_EditorClassIdentifier: 
   taskName: Upgrade fire power to 1000%
-  taskType: 3
+  taskType: 4
   requiredValue: 1000

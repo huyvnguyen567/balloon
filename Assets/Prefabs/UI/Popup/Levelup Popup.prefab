@@ -153,7 +153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8599560844630015625
 RectTransform:
   m_ObjectHideFlags: 0
@@ -348,6 +348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuButton: {fileID: 8599560845252802685}
   replayButton: {fileID: 8599560844630015624}
+  okButton: {fileID: 8599560845498905147}
   levelText: {fileID: 8599560844543903088}
   scoreText: {fileID: 8599560845046036109}
 --- !u!1 &8599560844991916895
@@ -584,7 +585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8599560845252802686
 RectTransform:
   m_ObjectHideFlags: 0

@@ -8,16 +8,11 @@ public class TaskSO : ScriptableObject
     public string taskName;
     public TaskType taskType;
     public int requiredValue;
-    private int currentValue;
+    public float currentValue;
     
-    public int CurrentValue
-    {
-        get { return currentValue; }
-        set { currentValue = value; }
-    }
     public bool IsCompleted()
     {
-        currentValue = PlayerPrefs.GetInt(taskType.ToString(), 0);
+        currentValue = PlayerPrefs.GetFloat(taskType.ToString(), 0);
         return currentValue >= requiredValue;
     }
 }

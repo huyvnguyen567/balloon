@@ -37,3 +37,7 @@ MonoBehaviour:
     numberOfMeteor: 10
     minHealth: 1
     maxHealth: 5
+  - level: 6
+    numberOfMeteor: 11
+    minHealth: 1
+    maxHealth: 6

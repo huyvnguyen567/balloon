@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Task 4
   m_EditorClassIdentifier: 
   taskName: Score 75000 points in one game
-  taskType: 1
+  taskType: 2
   requiredValue: 75000

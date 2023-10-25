@@ -14,6 +14,8 @@ public class BallFissionable : Ball
     override protected void Die()
     {
         ObjectPool.Instance.ReturnObjectToPool("Ball", gameObject);
+        DataManager.Instance.ballDestroyedCount++;
+        DataManager.Instance.SaveTaskTypeData(TaskType.BallBlasted, DataManager.Instance.ballDestroyedCount);
         if (size > minSize)
         {
             UpdateVisuals();

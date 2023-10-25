@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Task 7
   m_EditorClassIdentifier: 
   taskName: Upgrade coins to 500%
-  taskType: 4
+  taskType: 5
   requiredValue: 500
