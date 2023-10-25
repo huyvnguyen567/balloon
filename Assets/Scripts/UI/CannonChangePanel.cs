@@ -6,7 +6,7 @@ using TMPro;
 
 public class CannonChangePanel : MonoBehaviour
 {
-    public List<CanonButtonSO> cannons;
+    private List<CanonButtonSO> cannons;
     [SerializeField] private GameObject buyButtonPrefab;
     [SerializeField] private Transform content;
     public List<Button> buttonsList;
@@ -15,7 +15,7 @@ public class CannonChangePanel : MonoBehaviour
     private void OnEnable()
     {
         GameController.OnBuyClick.AddListener(() => UpdateCannonButton(UIManager.Instance.cannonBuyPopup.GetComponent<CannonBuyPopup>().index));
-
+        cannons = DataManager.Instance.cannonsData;
     }
     private void Start()
     {

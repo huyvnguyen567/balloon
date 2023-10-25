@@ -16,6 +16,8 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance;
     public List<ItemData> items = new List<ItemData>();
     public LevelSO levelData;
+    public List<ThemeButtonSO> themesData;
+    public List<CanonButtonSO> cannonsData;
 
     public float highScore;
     public float score;
@@ -45,44 +47,26 @@ public class DataManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            //PlayerPrefs.SetInt(TaskType.PointsInOneGame.ToString(), 0);
             PlayerPrefs.SetInt(TaskType.DaysConsecutive.ToString(), 3);
         }
     }
     public void SaveLevel()
     {
         PlayerPrefs.SetInt("CurrentLevel", GameController.Instance.CurrentLevel);
-        PlayerPrefs.Save();
     }
 
     public void LoadLevel()
     {
-        if (PlayerPrefs.HasKey("CurrentLevel"))
-        {
-            GameController.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
-        }
-        else
-        {
-            GameController.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
-        }
+        GameController.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
     }
     public void SaveScore()
     {
         PlayerPrefs.SetFloat("Score", score);
-        PlayerPrefs.Save();
     }
 
     public void LoadScore()
     {
-        if (PlayerPrefs.HasKey("Score"))
-        {
-            score = PlayerPrefs.GetFloat("Score");
-
-        }
-        else
-        {
-            score = PlayerPrefs.GetFloat("Score", 0);
-        }
+        score = PlayerPrefs.GetFloat("Score", 0);
     }
 
     public void SaveHighScore()
@@ -91,38 +75,23 @@ public class DataManager : MonoBehaviour
         {
             highScore = score;
             PlayerPrefs.SetFloat("HighScore", highScore);
-            PlayerPrefs.Save();
         }
     }
 
     public void LoadHighScore()
     {
-        if (PlayerPrefs.HasKey("HighScore"))
-        {
-            highScore = PlayerPrefs.GetFloat("HighScore");
-        }
+        highScore = PlayerPrefs.GetFloat("HighScore", 0);
     }
 
     public void SaveCoin()
     {
         PlayerPrefs.SetInt("Coin", coin);
-        PlayerPrefs.Save();
     }
 
     public void LoadCoin()
     {
-        if (PlayerPrefs.HasKey("Coin"))
-        {
-            coin = PlayerPrefs.GetInt("Coin");
-
-        }
-        else
-        {
-            coin = PlayerPrefs.GetInt("Coin", 1000);
-        }
+        coin = PlayerPrefs.GetInt("Coin", 1000);
     }
-
-
     public void LoadNumberOfGamesPlayed()
     {
         numberOfGamesPlayed = (int)PlayerPrefs.GetFloat(TaskType.GamesPlayed.ToString(), 0);
@@ -171,24 +140,31 @@ public class DataManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat(type.ToString(), value);
     }
-  
+
     public void LoadTaskTypeData()
     {
-        //if (PlayerPrefs.HasKey(TaskType.GamesPlayed.ToString()))
-        //{
-        //    numberOfGamesPlayed = (int)PlayerPrefs.GetFloat(TaskType.GamesPlayed.ToString());
-        //}
-        //if (PlayerPrefs.HasKey(TaskType.PointsInOneGame.ToString()))
-        //{
-        //    pointsInOneGame = (int)PlayerPrefs.GetFloat(TaskType.PointsInOneGame.ToString());
-        //}
-        //if (PlayerPrefs.HasKey(TaskType.FireUpgradeSpeed.ToString()))
-        //{
-        //    dps = PlayerPrefs.GetFloat(TaskType.FireUpgradeSpeed.ToString());
-        //}
-        //if (PlayerPrefs.HasKey(TaskType.FireUpgradePower.ToString()))
-        //{
-        //    firePower = (int)PlayerPrefs.GetFloat(TaskType.FireUpgradePower.ToString());
-        //}
+        foreach (var item in themesData)
+        {
+            switch (item.requireTasks.taskType)
+            {
+                case TaskType.GamesPlayed:
+                    item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.GamesPlayed.ToString());
+                    break;
+                case TaskType.PointsInOneGame:
+                    item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.PointsInOneGame.ToString());
+                    break;
+                case TaskType.FireUpgradeSpeed:
+                    item.requireTasks.currentValue = PlayerPrefs.GetFloat(TaskType.FireUpgradeSpeed.ToString());
+                    break;
+                case TaskType.FireUpgradePower:
+                    item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.FireUpgradePower.ToString());
+                    break;
+                case TaskType.BallBlasted:
+                    item.requireTasks.currentValue = PlayerPrefs.GetFloat(TaskType.BallBlasted.ToString());
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

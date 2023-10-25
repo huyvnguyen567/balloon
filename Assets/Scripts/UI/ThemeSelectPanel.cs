@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,63 +6,78 @@ using UnityEngine.UI;
 public class ThemeSelectPanel : MonoBehaviour
 {
     //[SerializeField] private int themeCount = 20;
-    [SerializeField] private List<ThemeButtonSO> themes;
+    //[SerializeField] private List<ThemeButtonSO> themesData;
     [SerializeField] private GameObject themePrefab;
     [SerializeField] private Transform content;
     [SerializeField] private Sprite inActive;
     private GameObject theme;
 
+    private bool hasInstantiatedThemes = false;
     private void OnEnable()
     {
-        foreach(var item in themes)
+        DataManager.Instance.LoadTaskTypeData();
+
+        if (!hasInstantiatedThemes)
         {
-            if(item.requireTasks.taskType == TaskType.GamesPlayed)
-            {
-                item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.GamesPlayed.ToString());
-            }
-            if(item.requireTasks.taskType == TaskType.PointsInOneGame)
-            {
-                item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.PointsInOneGame.ToString());
-            }
-            if (item.requireTasks.taskType == TaskType.FireUpgradeSpeed)
-            {
-                item.requireTasks.currentValue = PlayerPrefs.GetFloat(TaskType.FireUpgradeSpeed.ToString());
-            }
-            if (item.requireTasks.taskType == TaskType.FireUpgradePower)
-            {
-                item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.FireUpgradePower.ToString());
-            }
-            if (item.requireTasks.taskType == TaskType.BallBlasted)
-            {
-                item.requireTasks.currentValue = PlayerPrefs.GetFloat(TaskType.BallBlasted.ToString());
-            }
+            InstantiateThemes();
+            hasInstantiatedThemes = true; // Đánh dấu rằng đã tạo lần đầu
+        }
+        else
+        {
+            UpdateThemes();
         }
     }
-    void Start()
+
+    private void InstantiateThemes()
     {
-        for (int i = 0; i < themes.Count; i++)
+        for (int i = 0; i < DataManager.Instance.themesData.Count; i++)
         {
             theme = Instantiate(themePrefab, content, false);
             int index = i;
-            if (themes[i].CanActiveTheme())
+            if (DataManager.Instance.themesData[i].CanActiveTheme())
             {
-                theme.GetComponent<Image>().sprite = themes[i].active;
-                theme.GetComponent<Button>().onClick.AddListener(delegate { GameController.Instance.background.sprite = themes[index].background; });
+                theme.GetComponent<Image>().sprite = DataManager.Instance.themesData[i].active;
+                theme.GetComponent<Button>().onClick.AddListener(delegate { GameController.Instance.background.sprite = DataManager.Instance.themesData[index].background; });
             }
             else
             {
                 theme.GetComponent<Image>().sprite = inActive;
                 theme.GetComponent<Button>().onClick.AddListener(() => OnClickThemeLockButton(index));
             }
-        }      
+        }
+    }
+
+    private void UpdateThemes()
+    {
+        for (int i = 0; i < DataManager.Instance.themesData.Count; i++)
+        {
+            int index = i;
+            if (DataManager.Instance.themesData[i].CanActiveTheme())
+            {
+                // Cập nhật các themes đã tồn tại
+                theme = content.GetChild(i).gameObject;
+                theme.GetComponent<Image>().sprite = DataManager.Instance.themesData[i].active;
+                theme.GetComponent<Button>().onClick.RemoveAllListeners();
+                theme.GetComponent<Button>().onClick.AddListener(delegate { GameController.Instance.background.sprite = DataManager.Instance.themesData[index].background; });
+            }
+        }
+    }
+    void Start()
+    {
+        
     }
 
     public void OnClickThemeLockButton(int index)
     {
         ProcessTaskPopup processTaskPopup = UIManager.Instance.processTaskPopup.GetComponent<ProcessTaskPopup>();
-        processTaskPopup.taskNameText.text = themes[index].requireTasks.taskName;
-        processTaskPopup.processText.text = $"{themes[index].requireTasks.currentValue}/{themes[index].requireTasks.requiredValue}";
-        processTaskPopup.processSlider.value = (float)themes[index].requireTasks.currentValue / themes[index].requireTasks.requiredValue;
+        processTaskPopup.taskNameText.text = DataManager.Instance.themesData[index].requireTasks.taskName;
+        processTaskPopup.processText.text = $"{DataManager.Instance.themesData[index].requireTasks.currentValue}/{DataManager.Instance.themesData[index].requireTasks.requiredValue}";
+        processTaskPopup.processSlider.value = (float)DataManager.Instance.themesData[index].requireTasks.currentValue / DataManager.Instance.themesData[index].requireTasks.requiredValue;
         processTaskPopup.Show();
+    }
+
+    private void OnDisable()
+    {
+        theme.GetComponent<Button>().onClick.RemoveAllListeners();
     }
 }

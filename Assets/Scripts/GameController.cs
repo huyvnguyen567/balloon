@@ -139,8 +139,8 @@ public class GameController : MonoBehaviour
 
     public void BuyCannon(int index)
     {
-        CannonChangePanel cannonChangPanel = UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().cannonPanel.GetComponent<CannonChangePanel>();
-        List<CanonButtonSO> cannons = cannonChangPanel.cannons;
+        //CannonChangePanel cannonChangPanel = UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().cannonPanel.GetComponent<CannonChangePanel>();
+        List<CanonButtonSO> cannons = DataManager.Instance.cannonsData;
 
         CanonButtonSO cannonData = cannons[index];
         if (!cannonData.isPurchased && DataManager.Instance.diamond >= cannonData.price)
