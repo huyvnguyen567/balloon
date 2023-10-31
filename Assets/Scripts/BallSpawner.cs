@@ -8,6 +8,8 @@ public class BallSpawner : MonoBehaviour
 
     public int ballsCount;
     [SerializeField] private float spawnDelay;
+    [SerializeField] private float delayTime = 2f;
+
     public int maxHealth;
     public int minHealth;
 
@@ -26,6 +28,7 @@ public class BallSpawner : MonoBehaviour
  
     IEnumerator SpawnBalls()
     {
+        yield return new WaitForSeconds(delayTime);
         for (int i = 0; i < ballsCount; i++)
         {
             balls[i].SetActive(true);

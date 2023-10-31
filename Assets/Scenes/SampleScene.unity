@@ -303,6 +303,7 @@ MonoBehaviour:
   levelupPopup: {fileID: 0}
   losePopup: {fileID: 0}
   menuContentPopup: {fileID: 0}
+  textPopup: {fileID: 0}
   parentWindow: {fileID: 140713506}
   parentPopup: {fileID: 2103965934}
   bigMainMenuPanelPrefab: {fileID: 6178467960026298923, guid: 1734edc76310c9748be79486579950a8, type: 3}
@@ -312,6 +313,7 @@ MonoBehaviour:
   levelupPopupPrefab: {fileID: 8599560844904503515, guid: 4b934de553179054589fd4ed8140569b, type: 3}
   losePopupPrefab: {fileID: 3178363865914466323, guid: aad713fc1ff99d64a8faf5dbafab9f18, type: 3}
   menuContentPopupPrefab: {fileID: 5844909424060405969, guid: 0f81b68eee145314492cdaedd8d014a2, type: 3}
+  textPopupPrefab: {fileID: 4679181817685449618, guid: cd63840190d73794bbfe0e22c6962cee, type: 3}
 --- !u!1 &47649128
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,6 +545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballsCount: 5
   spawnDelay: 4
+  delayTime: 2
   maxHealth: 20
   minHealth: 0
   balls: []
@@ -733,10 +736,9 @@ MonoBehaviour:
   currentLevel: 0
   currentGameState: 0
   ScreenWidth: 0
-  background: {fileID: 1874475892}
-  cannonPrefab: {fileID: 118981354780877801, guid: 70a0aa4257365c34dbf566d446330b3d, type: 3}
   ballSize1DestroyedCount: 0
   targetProcess: 0
+  bossPrefab: {fileID: 1947595856093412196, guid: 6b778b2a9ced1f94dae9e8fbd3b08abc, type: 3}
 --- !u!4 &759962083
 Transform:
   m_ObjectHideFlags: 0
@@ -1023,30 +1025,61 @@ MonoBehaviour:
   - name: Yellow
     sprite: {fileID: 21300000, guid: b76a8d0d8e4e891479fd84d146759ff6, type: 2}
     chance: 0.5
-    cost: 0
+    cost: 1
   - name: Blue
     sprite: {fileID: 21300000, guid: 912b52a845c865b41bba5195ce007211, type: 2}
     chance: 0.3
-    cost: 0
+    cost: 2
   - name: Red
     sprite: {fileID: 21300000, guid: e40568bb4bab6d947923e1b511c529c9, type: 2}
     chance: 0.1
-    cost: 0
+    cost: 5
   - name: Pink
     sprite: {fileID: 21300000, guid: b43e13489ebf4f04eb9846689d17140b, type: 2}
     chance: 0.1
-    cost: 0
+    cost: 10
   levelData: {fileID: 11400000, guid: 21ea731366cb9624eaa9ccc05a242de2, type: 2}
+  themesData:
+  - {fileID: 11400000, guid: 64f1993d68c45b8418a39fc595722c4e, type: 2}
+  - {fileID: 11400000, guid: 15ccece5cbd043540ac3b7d228879ac6, type: 2}
+  - {fileID: 11400000, guid: 302d0d00bf5b65149b6fc3bd9b9de6e5, type: 2}
+  - {fileID: 11400000, guid: c0a057300bd60dd48bfcf1346a110794, type: 2}
+  - {fileID: 11400000, guid: a1f04ba3f8855a749845a16aff349600, type: 2}
+  - {fileID: 11400000, guid: 91a4b16e86d7d214e877c2eda5b7cbe3, type: 2}
+  - {fileID: 11400000, guid: 7836195ba9f70684fb467dcdfb279d31, type: 2}
+  - {fileID: 11400000, guid: c04f2ef4bf02df84bb49b22761c3864f, type: 2}
+  - {fileID: 11400000, guid: d97c5943c1d15e24db21efedf4a0d151, type: 2}
+  - {fileID: 11400000, guid: 149a3000845fb724c83c00359b725d00, type: 2}
+  - {fileID: 11400000, guid: 05d1288e6aa2cab4ab6c117998a41eda, type: 2}
+  - {fileID: 11400000, guid: 674c528e0547c3047a68d752a1254737, type: 2}
+  cannonsData:
+  - {fileID: 11400000, guid: 67bf5cf940f35f848aec234380b923a1, type: 2}
+  - {fileID: 11400000, guid: 0e27563ad36a1fa45ae7db99f9d70a67, type: 2}
+  - {fileID: 11400000, guid: 013b4ae7d75c19841aa5778d18269acc, type: 2}
+  - {fileID: 11400000, guid: ed149e8ad7945a54080510d1c3acb423, type: 2}
+  - {fileID: 11400000, guid: 6f4badf985a21f9488df0f4f0e46b488, type: 2}
+  - {fileID: 11400000, guid: 9d5a464461b715c4899028a8e9267a2e, type: 2}
+  - {fileID: 11400000, guid: b11163ee457bcf64d884785299e1b2c4, type: 2}
+  - {fileID: 11400000, guid: decb3101dfe44484cb0af09c0bd66a35, type: 2}
+  - {fileID: 11400000, guid: 6ec953103e57b514ea80112cb508bb43, type: 2}
+  - {fileID: 11400000, guid: c61204e9e9c173c418dcb5721c528f41, type: 2}
+  - {fileID: 11400000, guid: ddcee612cffbef843af8a39e6df8a305, type: 2}
+  - {fileID: 11400000, guid: 018123b1ce083e44ebfb97a3137cfc47, type: 2}
+  currentLevel: 5
+  background: {fileID: 1874475892}
+  cannonPrefab: {fileID: 0}
   highScore: 0
   score: 0
   previousScore: 0
-  diamond: 1700
-  coin: 1000
-  fireRateTime: 0.3
-  fireBulletSpeed: 22
-  fireDamage: 1
-  upgradeFireSpeedCost: 1
-  upgradeFirePowerCost: 1
+  diamond: 0
+  coin: 0
+  fireRateTime: 0
+  fireBulletSpeed: 0
+  fireDamage: 0
+  upgradeFireSpeedCost: 0
+  upgradeFirePowerCost: 0
+  numberOfGamesPlayed: 0
+  ballDestroyedCount: 0
 --- !u!4 &1969367804
 Transform:
   m_ObjectHideFlags: 0

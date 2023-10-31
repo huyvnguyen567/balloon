@@ -24,12 +24,13 @@ public class GameController : MonoBehaviour
     [SerializeField] private int currentLevel;
     public GameState currentGameState;
     [HideInInspector] public float ScreenWidth;
-    public SpriteRenderer background;
-    public GameObject cannonPrefab;
 
     public int ballSize1DestroyedCount;
     public float targetProcess;
-   
+
+    public GameObject bossPrefab;
+    private GameObject bossClone;
+
 
     private void Awake()
     {
@@ -53,18 +54,25 @@ public class GameController : MonoBehaviour
             Camera.main.transform.DOMove(targetPosition, 0.5f).SetEase(Ease.Linear);
         });
 
-        DataManager.Instance.LoadLevel();
-        DataManager.Instance.LoadScore();
-        DataManager.Instance.LoadHighScore();
-        DataManager.Instance.LoadCoin();
-        DataManager.Instance.LoadNumberOfGamesPlayed();
-        DataManager.Instance.LoadBallDestroyedCount();
+        //DataManager.Instance.LoadLevel();
+        //DataManager.Instance.LoadScore();
+        //DataManager.Instance.LoadHighScore();
+        //DataManager.Instance.LoadCoin();
+        //DataManager.Instance.LoadDiamond();
+        //DataManager.Instance.LoadNumberOfGamesPlayed();
+        //DataManager.Instance.LoadBallDestroyedCount();
+        //DataManager.Instance.LoadUpgradeData();
+        //DataManager.Instance.LoadTaskTypeData();
+        DataManager.Instance.LoadGameData();
+
+        currentLevel = DataManager.Instance.currentLevel;
 
         StartLevel(currentLevel);
         SwitchGameState(GameState.MainMenu);
+
     }
-  
-  
+
+
     public void SwitchGameState(GameState newState)
     {
         switch (newState)
@@ -81,7 +89,10 @@ public class GameController : MonoBehaviour
             case GameState.Gameplay:
                 UIManager.Instance.gamePlayWindow = UIManager.Instance.Spawn(UIType.Window, UIManager.Instance.gamePlayWindowPrefab);
                 UpdateProcessGame();
-
+                if ((DataManager.Instance.currentLevel % 5 == 0))
+                {
+                    SpawnBoss();
+                }
                 break;
             case GameState.Pause:
                 // Xử lý khi dừng game
@@ -111,6 +122,11 @@ public class GameController : MonoBehaviour
         BallSpawner.Instance.ballsCount = levelData.numberOfMeteor;
         BallSpawner.Instance.minHealth = levelData.minHealth;
         BallSpawner.Instance.maxHealth = levelData.maxHealth;
+    }
+
+    public void SpawnBoss()
+    {
+        GameObject bossClone = Instantiate(bossPrefab, new Vector3(0,7,0), Quaternion.identity);    
     }
     public ItemData GetRandomItem()
     {
@@ -147,6 +163,8 @@ public class GameController : MonoBehaviour
         {
             cannonData.isPurchased = true;
             DataManager.Instance.diamond -= cannonData.price;
+            DataManager.Instance.SaveDiamond();
+            UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().UpdateDiamondText();
             OnBuyClick.Invoke();
         }
         else

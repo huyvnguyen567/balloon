@@ -50,7 +50,8 @@ public class CannonChangePanel : MonoBehaviour
     
     public void OnButtonIsPurchasedClick(int index)
     {
-        GameController.Instance.cannonPrefab = cannons[index].prefab;
+        DataManager.Instance.cannonPrefab = cannons[index].prefab;
+        DataManager.Instance.SaveCannonPrefab();
         Debug.Log("Đã mua");
 
     }

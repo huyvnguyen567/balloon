@@ -40,4 +40,60 @@ MonoBehaviour:
   - level: 6
     numberOfMeteor: 11
     minHealth: 1
+    maxHealth: 10
+  - level: 7
+    numberOfMeteor: 11
+    minHealth: 1
+    maxHealth: 20
+  - level: 8
+    numberOfMeteor: 12
+    minHealth: 1
+    maxHealth: 30
+  - level: 9
+    numberOfMeteor: 13
+    minHealth: 1
+    maxHealth: 40
+  - level: 10
+    numberOfMeteor: 14
+    minHealth: 1
+    maxHealth: 50
+  - level: 11
+    numberOfMeteor: 15
+    minHealth: 1
+    maxHealth: 60
+  - level: 12
+    numberOfMeteor: 16
+    minHealth: 1
+    maxHealth: 70
+  - level: 13
+    numberOfMeteor: 17
+    minHealth: 1
+    maxHealth: 80
+  - level: 14
+    numberOfMeteor: 18
+    minHealth: 1
     maxHealth: 6
+  - level: 15
+    numberOfMeteor: 19
+    minHealth: 1
+    maxHealth: 90
+  - level: 16
+    numberOfMeteor: 20
+    minHealth: 1
+    maxHealth: 100
+  - level: 17
+    numberOfMeteor: 21
+    minHealth: 100
+    maxHealth: 200
+  - level: 18
+    numberOfMeteor: 22
+    minHealth: 200
+    maxHealth: 300
+  - level: 19
+    numberOfMeteor: 23
+    minHealth: 300
+    maxHealth: 400
+  - level: 20
+    numberOfMeteor: 24
+    minHealth: 400
+    maxHealth: 500

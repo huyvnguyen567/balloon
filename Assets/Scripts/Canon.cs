@@ -82,7 +82,10 @@ public class Canon : MonoBehaviour
                 //RotateWheel((float)-mouseX / 50);
             }
         }
-        
+        else
+        {
+            GetComponent<Collider2D>().enabled = false;
+        }
 
 
     }
@@ -151,6 +154,10 @@ public class Canon : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Coin"))
         {
+            DataManager.Instance.coin += collision.gameObject.GetComponent<Item>().cost;
+            UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().UpdateCoinText();
+            DataManager.Instance.SaveCoin();
+            TextPopup.Create(collision.transform.position, $"${collision.gameObject.GetComponent<Item>().cost}");
             ObjectPool.Instance.ReturnObjectToPool("Item", collision.gameObject);
         }
     }

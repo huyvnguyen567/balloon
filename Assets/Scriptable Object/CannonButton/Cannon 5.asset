@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CannonName: Cannon1
   price: 250
-  isPurchased: 0
+  isPurchased: 1
   sprite: {fileID: -193836051, guid: 0354b21be03717344a2d23100bfa60df, type: 3}
   prefab: {fileID: 118981354780877801, guid: 3b3c77ab0125e4a41a19be0879240b47, type: 3}

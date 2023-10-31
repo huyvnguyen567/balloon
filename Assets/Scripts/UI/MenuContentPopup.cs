@@ -19,7 +19,7 @@ public class MenuContentPopup : BaseUI, IPointerDownHandler
     {
         if (!isCannonCreated)
         {
-            cannonClone = Instantiate(GameController.Instance.cannonPrefab, cannon.transform.position, Quaternion.identity);
+            cannonClone = Instantiate(DataManager.Instance.cannonPrefab, cannon.transform.position, Quaternion.identity);
             //cannonClone.transform.localScale = new Vector3(52, 52, 1);
             cannonClone.GetComponent<Canon>().isAnim = true;
             isCannonCreated = true;
@@ -61,7 +61,7 @@ public class MenuContentPopup : BaseUI, IPointerDownHandler
         if (hasBeenClicked && GameController.Instance.currentGameState == GameController.GameState.MainMenu)
         {
             GameController.Instance.onStartGame.Invoke();
-            Instantiate(GameController.Instance.cannonPrefab, cannon.transform.position, Quaternion.identity);
+            Instantiate(DataManager.Instance.cannonPrefab, cannon.transform.position, Quaternion.identity);
             hasBeenClicked = false;
             GameController.Instance.SwitchGameState(GameController.GameState.Gameplay);
         }

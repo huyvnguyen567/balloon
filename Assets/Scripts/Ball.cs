@@ -50,11 +50,21 @@ public class Ball : MonoBehaviour
         }
         else
         {
-            int direction = leftAndRight[Random.Range(0, 2)];
-            float screenOffset = GameController.Instance.ScreenWidth * 1.3f;
-            transform.position = new Vector2(screenOffset * direction, transform.position.y);
-            rb.velocity = new Vector2(-direction, 0);
-            Invoke("FallDown", Random.Range(minDelayShowing, maxDelayShowing));
+            GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+            if (boss != null)
+            {
+                // Nếu "boss" tồn tại, đặt vị trí của quả bóng dựa trên "boss".
+                transform.position = boss.transform.position;
+                FallDown();
+            }
+            else
+            {
+                int direction = leftAndRight[Random.Range(0, 2)];
+                float screenOffset = GameController.Instance.ScreenWidth * 1.3f;
+                transform.position = new Vector2(screenOffset * direction, transform.position.y);
+                rb.velocity = new Vector2(-direction, 0);
+                Invoke("FallDown", Random.Range(minDelayShowing, maxDelayShowing));
+            }
         }
 
     }

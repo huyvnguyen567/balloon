@@ -7,7 +7,7 @@ public class Item : MonoBehaviour
     private Rigidbody2D rb;
     
     public float chance;
-    public float cost;
+    public int cost;
     public Sprite sprite;
 
 

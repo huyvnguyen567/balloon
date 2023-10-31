@@ -23,8 +23,19 @@ public class LosePopup : MonoBehaviour
     }
     void Start()
     {
-        float processPercent = GameController.Instance.ballSize1DestroyedCount / GameController.Instance.targetProcess * 100;
-        Debug.Log(processPercent);
+        float processPercent = 0;
+        if ((DataManager.Instance.currentLevel % 5 == 0))
+        {
+            GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+            if (boss != null)
+            {
+                processPercent = boss.GetComponent<Boss>().bossDamageTaken / boss.GetComponent<Boss>().initHealth * 100;
+            }
+        }
+        else
+        {
+            processPercent = GameController.Instance.ballSize1DestroyedCount / GameController.Instance.targetProcess * 100;
+        }
         levelText.text = $"Level {GameController.Instance.CurrentLevel}: {(int)processPercent}% Completed";
         scoreText.text = $"Your Score: {(int)DataManager.Instance.score}";
     }

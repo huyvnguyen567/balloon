@@ -28,9 +28,11 @@ public class BigMainMenuPanel : MonoBehaviour
 
     //Top Panel
     [SerializeField] private TMP_Text coinText;
+    [SerializeField] private TMP_Text diamondText;
     private void OnEnable()
     {
         UpdateCoinText();
+        UpdateDiamondText();
         themePanel.SetActive(false);
         cannonPanel.SetActive(false);
         OnClickChangeColorEvent(themeButton);
@@ -71,6 +73,11 @@ public class BigMainMenuPanel : MonoBehaviour
     public void UpdateCoinText()
     {
         coinText.text = $"{DataManager.Instance.coin}";
+    }
+
+    public void UpdateDiamondText()
+    {
+        diamondText.text = $"{DataManager.Instance.diamond}";
     }
     public void OnClickChangeColorEvent(Button button)
     {

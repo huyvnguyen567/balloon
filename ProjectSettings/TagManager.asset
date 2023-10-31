@@ -10,6 +10,7 @@ TagManager:
   - Cannon
   - Coin
   - Top
+  - Boss
   layers:
   - Default
   - TransparentFX

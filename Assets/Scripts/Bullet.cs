@@ -44,5 +44,15 @@ public class Bullet : MonoBehaviour
             }
             ObjectPool.Instance.ReturnObjectToPool("Bullet", gameObject);
         }
+        if (collision.gameObject.CompareTag("Boss"))
+        {
+            Boss boss = collision.gameObject.GetComponent<Boss>();
+            if (boss != null)
+            {
+                boss.TakeDamage(damage);
+
+            }
+            ObjectPool.Instance.ReturnObjectToPool("Bullet", gameObject);
+        }
     }
 }

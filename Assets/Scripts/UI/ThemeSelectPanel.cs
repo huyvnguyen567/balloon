@@ -15,7 +15,6 @@ public class ThemeSelectPanel : MonoBehaviour
     private bool hasInstantiatedThemes = false;
     private void OnEnable()
     {
-        DataManager.Instance.LoadTaskTypeData();
 
         if (!hasInstantiatedThemes)
         {
@@ -37,7 +36,9 @@ public class ThemeSelectPanel : MonoBehaviour
             if (DataManager.Instance.themesData[i].CanActiveTheme())
             {
                 theme.GetComponent<Image>().sprite = DataManager.Instance.themesData[i].active;
-                theme.GetComponent<Button>().onClick.AddListener(delegate { GameController.Instance.background.sprite = DataManager.Instance.themesData[index].background; });
+                theme.GetComponent<Button>().onClick.AddListener(delegate { DataManager.Instance.background.sprite = DataManager.Instance.themesData[index].background;
+                    DataManager.Instance.SaveBackgroundSprite();
+                });
             }
             else
             {
@@ -58,7 +59,9 @@ public class ThemeSelectPanel : MonoBehaviour
                 theme = content.GetChild(i).gameObject;
                 theme.GetComponent<Image>().sprite = DataManager.Instance.themesData[i].active;
                 theme.GetComponent<Button>().onClick.RemoveAllListeners();
-                theme.GetComponent<Button>().onClick.AddListener(delegate { GameController.Instance.background.sprite = DataManager.Instance.themesData[index].background; });
+                theme.GetComponent<Button>().onClick.AddListener(delegate { DataManager.Instance.background.sprite = DataManager.Instance.themesData[index].background;
+                    DataManager.Instance.SaveBackgroundSprite();
+                });
             }
         }
     }
@@ -78,6 +81,6 @@ public class ThemeSelectPanel : MonoBehaviour
 
     private void OnDisable()
     {
-        theme.GetComponent<Button>().onClick.RemoveAllListeners();
+        //theme.GetComponent<Button>().onClick.RemoveAllListeners();
     }
 }

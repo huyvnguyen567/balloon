@@ -19,6 +19,10 @@ public class DataManager : MonoBehaviour
     public List<ThemeButtonSO> themesData;
     public List<CanonButtonSO> cannonsData;
 
+    public int currentLevel;
+    public SpriteRenderer background;
+    public GameObject cannonPrefab;
+
     public float highScore;
     public float score;
     public float previousScore;
@@ -39,6 +43,9 @@ public class DataManager : MonoBehaviour
     //public float dps;
     //public int pointsInOneGame;
     //public int firePower;
+    private const string lastLoginDateKey = "LastLoginDate";
+    public float loginCount = 0;
+    private string lastLoginDate = "";
 
 
 
@@ -47,28 +54,47 @@ public class DataManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            PlayerPrefs.SetInt(TaskType.DaysConsecutive.ToString(), 3);
         }
+    }
+
+    private void Start()
+    {
+        // Lấy dữ liệu từ PlayerPrefs.
+        loginCount = PlayerPrefs.GetFloat(TaskType.DaysConsecutive.ToString(), 0);
+        lastLoginDate = PlayerPrefs.GetString(lastLoginDateKey, "");
+
+        // Lấy ngày hôm nay.
+        string currentDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+
+        if (lastLoginDate == currentDate)
+        {
+            // Người chơi đã đăng nhập trong ngày hôm nay, không tăng biến đếm.
+        }
+        else
+        {
+            // Người chơi chưa đăng nhập vào ngày hôm nay, tăng biến đếm.
+            loginCount++;
+
+            // Cập nhật ngày đăng nhập gần đây.
+            lastLoginDate = currentDate;
+
+            // Lưu dữ liệu vào PlayerPrefs.
+            SaveTaskTypeData(TaskType.DaysConsecutive, loginCount);
+            PlayerPrefs.SetString(lastLoginDateKey, lastLoginDate);
+        }
+
+        // In ra số lần đăng nhập.
+        //Debug.Log("Số lần đăng nhập: " + loginCount);
     }
     public void SaveLevel()
     {
         PlayerPrefs.SetInt("CurrentLevel", GameController.Instance.CurrentLevel);
     }
 
-    public void LoadLevel()
-    {
-        GameController.Instance.CurrentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
-    }
     public void SaveScore()
     {
         PlayerPrefs.SetFloat("Score", score);
     }
-
-    public void LoadScore()
-    {
-        score = PlayerPrefs.GetFloat("Score", 0);
-    }
-
     public void SaveHighScore()
     {
         if (score > highScore)
@@ -77,29 +103,14 @@ public class DataManager : MonoBehaviour
             PlayerPrefs.SetFloat("HighScore", highScore);
         }
     }
-
-    public void LoadHighScore()
-    {
-        highScore = PlayerPrefs.GetFloat("HighScore", 0);
-    }
-
     public void SaveCoin()
     {
         PlayerPrefs.SetInt("Coin", coin);
     }
 
-    public void LoadCoin()
+    public void SaveDiamond()
     {
-        coin = PlayerPrefs.GetInt("Coin", 1000);
-    }
-    public void LoadNumberOfGamesPlayed()
-    {
-        numberOfGamesPlayed = (int)PlayerPrefs.GetFloat(TaskType.GamesPlayed.ToString(), 0);
-    }
-
-    public void LoadBallDestroyedCount()
-    {
-        ballDestroyedCount = (int)PlayerPrefs.GetFloat(TaskType.BallBlasted.ToString(), 0);
+        PlayerPrefs.SetInt("Diamond", diamond);
     }
 
     public void SaveUpgradeData()
@@ -112,59 +123,76 @@ public class DataManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void LoadUpgradeData()
-    {
-        if (PlayerPrefs.HasKey("FireRateTime"))
-        {
-            fireRateTime = PlayerPrefs.GetFloat("FireRateTime");
-        }
-        if (PlayerPrefs.HasKey("FireBulletSpeed"))
-        {
-            fireBulletSpeed = PlayerPrefs.GetFloat("FireBulletSpeed");
-        }
-        if (PlayerPrefs.HasKey("FireDamage"))
-        {
-            fireDamage = PlayerPrefs.GetFloat("FireDamage");
-        }
-        if (PlayerPrefs.HasKey("UpgradeFireSpeedCost"))
-        {
-            upgradeFireSpeedCost = PlayerPrefs.GetInt("UpgradeFireSpeedCost");
-        }
-        if (PlayerPrefs.HasKey("UpgradeFirePowerCost"))
-        {
-            upgradeFirePowerCost = PlayerPrefs.GetInt("UpgradeFirePowerCost");
-        }
-    }
-
     public void SaveTaskTypeData(TaskType type, float value)
     {
         PlayerPrefs.SetFloat(type.ToString(), value);
     }
 
-    public void LoadTaskTypeData()
+    public void SaveBackgroundSprite()
     {
-        foreach (var item in themesData)
+        PlayerPrefs.SetString("BackgroundSprite", background.sprite.name);
+    }
+
+    public void SaveCannonPrefab()
+    {
+        PlayerPrefs.SetString("CannonPrefab", cannonPrefab.name);
+    }
+    public void LoadGameData()
+    {
+        currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+        score = PlayerPrefs.GetFloat("Score", 0);
+        highScore = PlayerPrefs.GetFloat("HighScore", 0);
+        coin = PlayerPrefs.GetInt("Coin", 500);
+        diamond = PlayerPrefs.GetInt("Diamond", 999);
+        numberOfGamesPlayed = (int)PlayerPrefs.GetFloat(TaskType.GamesPlayed.ToString(), 0);
+        ballDestroyedCount = (int)PlayerPrefs.GetFloat(TaskType.BallBlasted.ToString(), 0);
+        fireRateTime = PlayerPrefs.GetFloat("FireRateTime", 0.3f);
+        fireBulletSpeed = PlayerPrefs.GetFloat("FireBulletSpeed", 22);
+        fireDamage = PlayerPrefs.GetFloat("FireDamage", 1);
+        upgradeFireSpeedCost = PlayerPrefs.GetInt("UpgradeFireSpeedCost", 1);
+        upgradeFirePowerCost = PlayerPrefs.GetInt("UpgradeFirePowerCost", 1);
+        string backgroundSpriteName = PlayerPrefs.GetString("BackgroundSprite", "BG1");
+        string cannonPrefabName = PlayerPrefs.GetString("CannonPrefab", "Canon 1");
+        Sprite loadedBackgroundSprite = Resources.Load<Sprite>(backgroundSpriteName);
+        if (loadedBackgroundSprite != null)
         {
-            switch (item.requireTasks.taskType)
-            {
-                case TaskType.GamesPlayed:
-                    item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.GamesPlayed.ToString());
-                    break;
-                case TaskType.PointsInOneGame:
-                    item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.PointsInOneGame.ToString());
-                    break;
-                case TaskType.FireUpgradeSpeed:
-                    item.requireTasks.currentValue = PlayerPrefs.GetFloat(TaskType.FireUpgradeSpeed.ToString());
-                    break;
-                case TaskType.FireUpgradePower:
-                    item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.FireUpgradePower.ToString());
-                    break;
-                case TaskType.BallBlasted:
-                    item.requireTasks.currentValue = PlayerPrefs.GetFloat(TaskType.BallBlasted.ToString());
-                    break;
-                default:
-                    break;
-            }
+            background.sprite = loadedBackgroundSprite;
         }
+
+        GameObject loadedCannonPrefab = Resources.Load<GameObject>(cannonPrefabName);
+        if (loadedCannonPrefab != null)
+        {
+            cannonPrefab = loadedCannonPrefab;
+        }
+        
     }
 }
+
+    //public void LoadTaskTypeData()
+    //{
+    //    foreach (var item in themesData)
+    //    {
+    //        switch (item.requireTasks.taskType)
+    //        {
+    //            case TaskType.GamesPlayed:
+    //                item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.GamesPlayed.ToString());
+    //                break;
+    //            case TaskType.PointsInOneGame:
+    //                item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.PointsInOneGame.ToString());
+    //                break;
+    //            case TaskType.FireUpgradeSpeed:
+    //                item.requireTasks.currentValue = PlayerPrefs.GetFloat(TaskType.FireUpgradeSpeed.ToString());
+    //                break;
+    //            case TaskType.FireUpgradePower:
+    //                item.requireTasks.currentValue = (int)PlayerPrefs.GetFloat(TaskType.FireUpgradePower.ToString());
+    //                break;
+    //            case TaskType.BallBlasted:
+    //                item.requireTasks.currentValue = PlayerPrefs.GetFloat(TaskType.BallBlasted.ToString());
+    //                break;
+    //            default:
+    //                break;
+    //        }
+    //    }
+    //}
+
+

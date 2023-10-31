@@ -42,7 +42,6 @@ public class BattleTutorialPanel : BaseUI
         //}
 
         //GameController.Instance.onStartGame.AddListener(Hide);
-        DataManager.Instance.LoadUpgradeData();
 
         for (int i = 0; i< upgradeButtons.Length; i++)
         {

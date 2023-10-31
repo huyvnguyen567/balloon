@@ -25,6 +25,7 @@ public class BallFissionable : Ball
         {
             DropItem();
             GameController.Instance.ballSize1DestroyedCount++;
+
             UpdateProcessEvent.Invoke();
         }
     }

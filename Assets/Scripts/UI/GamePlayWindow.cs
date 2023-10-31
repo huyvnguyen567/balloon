@@ -16,7 +16,14 @@ public class GamePlayWindow : MonoBehaviour
     {
         //UpdateSlider();
         UpdateScoreText();
-        BallFissionable.UpdateProcessEvent.AddListener(() => UpdateSlider());
+        if(DataManager.Instance.currentLevel % 5 == 0)
+        {
+            Boss.UpdateProcessEvent.AddListener(() => UpdateSlider());
+        }
+        else
+        {
+            BallFissionable.UpdateProcessEvent.AddListener(() => UpdateSlider());
+        }
         //BallFissionable.UpdateScoreEvent.AddListener(() => UpdateScoreText());
         BallFissionable.UpdateScoreEvent.AddListener(() => PlayScoreChangeAnimation());
         currentLevelText.text = GameController.Instance.CurrentLevel.ToString();
@@ -29,10 +36,24 @@ public class GamePlayWindow : MonoBehaviour
     {
         if (processSlider != null)
         {
-            processSlider.value = (float)GameController.Instance.ballSize1DestroyedCount / GameController.Instance.targetProcess;
+            if ((DataManager.Instance.currentLevel % 5 == 0))
+            {
+                GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+                if (boss != null)
+                {
+                    processSlider.value = (float)boss.GetComponent<Boss>().bossDamageTaken / boss.GetComponent<Boss>().initHealth;
+
+                    Debug.Log(boss.GetComponent<Boss>().bossDamageTaken);
+                }
+            }
+            else
+            {
+                processSlider.value = (float)GameController.Instance.ballSize1DestroyedCount / GameController.Instance.targetProcess;
+            }
             if (processSlider.value == 1)
             {
                 GameController.Instance.SwitchGameState(GameController.GameState.Win);
+                BallSpawner.Instance.gameObject.SetActive(false);
             }
         }
     }
