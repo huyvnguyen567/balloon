@@ -15,3 +15,4 @@ MonoBehaviour:
   taskName: Blast 10000 balls
   taskType: 1
   requiredValue: 10000
+  currentValue: 9

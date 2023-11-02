@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f6f135ce6baf544ab3775f258825d33, type: 3}
   m_Name: Cannon 7
   m_EditorClassIdentifier: 
-  CannonName: Cannon1
+  CannonName: Cannon7
   price: 500
   isPurchased: 0
   sprite: {fileID: -1530475048, guid: 0354b21be03717344a2d23100bfa60df, type: 3}
   prefab: {fileID: 118981354780877801, guid: 23b5d51bb5336be40bc121cc85ef3026, type: 3}
+  currentValue: 0

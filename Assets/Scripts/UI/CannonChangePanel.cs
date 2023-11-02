@@ -6,7 +6,6 @@ using TMPro;
 
 public class CannonChangePanel : MonoBehaviour
 {
-    private List<CanonButtonSO> cannons;
     [SerializeField] private GameObject buyButtonPrefab;
     [SerializeField] private Transform content;
     public List<Button> buttonsList;
@@ -15,11 +14,11 @@ public class CannonChangePanel : MonoBehaviour
     private void OnEnable()
     {
         GameController.OnBuyClick.AddListener(() => UpdateCannonButton(UIManager.Instance.cannonBuyPopup.GetComponent<CannonBuyPopup>().index));
-        cannons = DataManager.Instance.cannonsData;
+
     }
     private void Start()
     {
-        for(int i = 0; i < cannons.Count; i++)
+        for (int i = 0; i < DataManager.Instance.cannonsData.Count; i++)
         {
             GameObject cannon = Instantiate(buyButtonPrefab, content.transform);
             Image cannonImage = cannon.transform.GetChild(0).GetComponent<Image>();
@@ -27,18 +26,24 @@ public class CannonChangePanel : MonoBehaviour
             Image diamondImage = diamond.GetChild(0).GetComponent<Image>();
             TMP_Text diamonText = diamond.GetChild(1).GetComponent<TMP_Text>();
             int index = i;
-            cannonImage.sprite = cannons[i].sprite;
-            if (cannons[i].isPurchased)
+            cannonImage.sprite = DataManager.Instance.cannonsData[index].sprite;
+            if (index != 0)
+            {
+                DataManager.Instance.cannonsData[index].UpdateIsPurchasedStatus();
+            }
+            //cannons[index].LoadIsPurchased();
+            if (DataManager.Instance.cannonsData[index].isPurchased)
             {
                 cannonImage.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                 diamond.gameObject.SetActive(false);
                 cannon.GetComponent<Button>().onClick.AddListener(() => OnButtonIsPurchasedClick(index));
+
             }
             else
             {
                 cannonImage.color = new Color(0.3f, 0.3f, 0.3f, 1f);
-                diamonText.text = cannons[i].price.ToString();
-                cannon.GetComponent<Button>().onClick.AddListener(()=> OnButtonIsNotPurchasedClick(index));
+                diamonText.text = DataManager.Instance.cannonsData[index].price.ToString();
+                cannon.GetComponent<Button>().onClick.AddListener(() => OnButtonIsNotPurchasedClick(index));
 
             }
 
@@ -47,10 +52,10 @@ public class CannonChangePanel : MonoBehaviour
         }
     }
 
-    
+
     public void OnButtonIsPurchasedClick(int index)
     {
-        DataManager.Instance.cannonPrefab = cannons[index].prefab;
+        DataManager.Instance.cannonPrefab = DataManager.Instance.cannonsData[index].prefab;
         DataManager.Instance.SaveCannonPrefab();
         Debug.Log("Đã mua");
 
@@ -60,8 +65,8 @@ public class CannonChangePanel : MonoBehaviour
     {
         UIManager.Instance.cannonBuyPopup.SetActive(true);
         CannonBuyPopup cannonBuyPopup = UIManager.Instance.cannonBuyPopup.GetComponent<CannonBuyPopup>();
-        cannonBuyPopup.cannonIcon.GetComponent<Image>().sprite = cannons[index].sprite;
-        cannonBuyPopup.priceText.text = cannons[index].price.ToString();
+        cannonBuyPopup.cannonIcon.GetComponent<Image>().sprite = DataManager.Instance.cannonsData[index].sprite;
+        cannonBuyPopup.priceText.text = DataManager.Instance.cannonsData[index].price.ToString();
         cannonBuyPopup.index = index;
     }
 
@@ -79,5 +84,6 @@ public class CannonChangePanel : MonoBehaviour
     private void OnDisable()
     {
         GameController.OnBuyClick.RemoveListener(() => UpdateCannonButton(UIManager.Instance.cannonBuyPopup.GetComponent<CannonBuyPopup>().index));
+
     }
 }

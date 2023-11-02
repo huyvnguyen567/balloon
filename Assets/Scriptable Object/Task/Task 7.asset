@@ -15,3 +15,4 @@ MonoBehaviour:
   taskName: Upgrade coins to 500%
   taskType: 5
   requiredValue: 500
+  currentValue: 0

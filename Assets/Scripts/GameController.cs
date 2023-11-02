@@ -31,7 +31,6 @@ public class GameController : MonoBehaviour
     public GameObject bossPrefab;
     private GameObject bossClone;
 
-
     private void Awake()
     {
         if (Instance == null)
@@ -44,13 +43,9 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         onStartGame.AddListener(delegate
-        {  // Lấy vị trí hiện tại của camera
+        { 
             Vector3 currentPosition = Camera.main.transform.position;
-
-            // Điểm đến là new Vector3(0, 0, -10)
             Vector3 targetPosition = new Vector3(0, 0, -10);
-
-            // Sử dụng DOTween để di chuyển mượt mà
             Camera.main.transform.DOMove(targetPosition, 0.5f).SetEase(Ease.Linear);
         });
 
@@ -82,8 +77,7 @@ public class GameController : MonoBehaviour
                 UIManager.Instance.processTaskPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.processTaskPopupPrefab);
                 UIManager.Instance.cannonBuyPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.cannonBuyPopupPrefab);
                 UIManager.Instance.menuContentPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.menuContentPopupPrefab);
-                UIManager.Instance.processTaskPopup.SetActive(false);
-                UIManager.Instance.cannonBuyPopup.SetActive(false);
+                UIManager.Instance.comingSoonPopup = UIManager.Instance.Spawn(UIType.Popup, UIManager.Instance.comingSoonPopupPrefab);
                 break;
 
             case GameState.Gameplay:
@@ -162,6 +156,7 @@ public class GameController : MonoBehaviour
         if (!cannonData.isPurchased && DataManager.Instance.diamond >= cannonData.price)
         {
             cannonData.isPurchased = true;
+            DataManager.Instance.SaveCannonData(cannonData);
             DataManager.Instance.diamond -= cannonData.price;
             DataManager.Instance.SaveDiamond();
             UIManager.Instance.bigMainMenuPanel.GetComponent<BigMainMenuPanel>().UpdateDiamondText();
@@ -177,5 +172,4 @@ public class GameController : MonoBehaviour
         get { return currentLevel; }
         set { currentLevel = value; }
     }
-
 }

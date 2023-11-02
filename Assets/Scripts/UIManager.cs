@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject losePopup;
     public GameObject menuContentPopup;
     public GameObject textPopup;
+    public GameObject comingSoonPopup;
 
     [Header("Parent Transform")]
     [SerializeField] private GameObject parentWindow;
@@ -29,6 +30,7 @@ public class UIManager : MonoBehaviour
     public GameObject losePopupPrefab;
     public GameObject menuContentPopupPrefab;
     public GameObject textPopupPrefab;
+    public GameObject comingSoonPopupPrefab;
 
     void Awake()
     {

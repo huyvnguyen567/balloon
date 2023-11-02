@@ -15,3 +15,4 @@ MonoBehaviour:
   taskName: Play 100 games
   taskType: 0
   requiredValue: 100
+  currentValue: 1

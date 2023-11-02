@@ -15,3 +15,4 @@ MonoBehaviour:
   taskName: Score 75000 points in one game
   taskType: 2
   requiredValue: 75000
+  currentValue: 9

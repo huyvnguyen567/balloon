@@ -29,7 +29,6 @@ public class CannonBuyPopup : BaseUI
     {
         Hide();
         GameController.Instance.BuyCannon(index);
-        Debug.Log(index);
     }
 
     private void OnDisable()

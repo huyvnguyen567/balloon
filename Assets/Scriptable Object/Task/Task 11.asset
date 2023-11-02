@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Play 3 consecutive days
   taskType: 6
-  requiredValue: 1
+  requiredValue: 3
   currentValue: 1

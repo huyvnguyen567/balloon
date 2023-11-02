@@ -47,6 +47,8 @@ public class DataManager : MonoBehaviour
     public float loginCount = 0;
     private string lastLoginDate = "";
 
+    public int freeCount;
+
 
 
     private void Awake()
@@ -59,32 +61,7 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        // Lấy dữ liệu từ PlayerPrefs.
-        loginCount = PlayerPrefs.GetFloat(TaskType.DaysConsecutive.ToString(), 0);
-        lastLoginDate = PlayerPrefs.GetString(lastLoginDateKey, "");
-
-        // Lấy ngày hôm nay.
-        string currentDate = System.DateTime.Now.ToString("yyyy-MM-dd");
-
-        if (lastLoginDate == currentDate)
-        {
-            // Người chơi đã đăng nhập trong ngày hôm nay, không tăng biến đếm.
-        }
-        else
-        {
-            // Người chơi chưa đăng nhập vào ngày hôm nay, tăng biến đếm.
-            loginCount++;
-
-            // Cập nhật ngày đăng nhập gần đây.
-            lastLoginDate = currentDate;
-
-            // Lưu dữ liệu vào PlayerPrefs.
-            SaveTaskTypeData(TaskType.DaysConsecutive, loginCount);
-            PlayerPrefs.SetString(lastLoginDateKey, lastLoginDate);
-        }
-
-        // In ra số lần đăng nhập.
-        //Debug.Log("Số lần đăng nhập: " + loginCount);
+       
     }
     public void SaveLevel()
     {
@@ -128,6 +105,11 @@ public class DataManager : MonoBehaviour
         PlayerPrefs.SetFloat(type.ToString(), value);
     }
 
+    public void SaveCannonData(CanonButtonSO type)
+    {
+        PlayerPrefs.SetInt(type.CannonName + "_IsPurchased", type.isPurchased ? 1 : 0);
+    }
+
     public void SaveBackgroundSprite()
     {
         PlayerPrefs.SetString("BackgroundSprite", background.sprite.name);
@@ -137,13 +119,19 @@ public class DataManager : MonoBehaviour
     {
         PlayerPrefs.SetString("CannonPrefab", cannonPrefab.name);
     }
+
+    public void SaveFreeBuyCount()
+    {
+        PlayerPrefs.SetInt("FreeCount", freeCount);
+        PlayerPrefs.SetString("LastAdWatchTime", System.DateTime.Now.ToString());
+    }
     public void LoadGameData()
     {
         currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
         score = PlayerPrefs.GetFloat("Score", 0);
         highScore = PlayerPrefs.GetFloat("HighScore", 0);
         coin = PlayerPrefs.GetInt("Coin", 500);
-        diamond = PlayerPrefs.GetInt("Diamond", 999);
+        diamond = PlayerPrefs.GetInt("Diamond", 500);
         numberOfGamesPlayed = (int)PlayerPrefs.GetFloat(TaskType.GamesPlayed.ToString(), 0);
         ballDestroyedCount = (int)PlayerPrefs.GetFloat(TaskType.BallBlasted.ToString(), 0);
         fireRateTime = PlayerPrefs.GetFloat("FireRateTime", 0.3f);
@@ -151,6 +139,8 @@ public class DataManager : MonoBehaviour
         fireDamage = PlayerPrefs.GetFloat("FireDamage", 1);
         upgradeFireSpeedCost = PlayerPrefs.GetInt("UpgradeFireSpeedCost", 1);
         upgradeFirePowerCost = PlayerPrefs.GetInt("UpgradeFirePowerCost", 1);
+
+        //LOAD BACKGROUND AND CANNON
         string backgroundSpriteName = PlayerPrefs.GetString("BackgroundSprite", "BG1");
         string cannonPrefabName = PlayerPrefs.GetString("CannonPrefab", "Canon 1");
         Sprite loadedBackgroundSprite = Resources.Load<Sprite>(backgroundSpriteName);
@@ -164,8 +154,71 @@ public class DataManager : MonoBehaviour
         {
             cannonPrefab = loadedCannonPrefab;
         }
-        
+
+        //LOAD CANNON DATA
+        if (PlayerPrefs.HasKey("CannonData"))
+        {
+            string jsonData = PlayerPrefs.GetString("CannonData");
+            cannonsData = JsonHelper.FromJson<CanonButtonSO>(jsonData);
+        }
+
+        // LOAD LOGIN COUNT
+        loginCount = PlayerPrefs.GetFloat(TaskType.DaysConsecutive.ToString(), 0);
+        lastLoginDate = PlayerPrefs.GetString(lastLoginDateKey, "");
+
+        string currentDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+
+        if (lastLoginDate == currentDate)
+        {
+
+        }
+        else
+        {
+            loginCount++;
+
+            lastLoginDate = currentDate;
+
+            SaveTaskTypeData(TaskType.DaysConsecutive, loginCount);
+            PlayerPrefs.SetString(lastLoginDateKey, lastLoginDate);
+        }
+
+        //LOAD FREE BUY COUNT
+
+        freeCount = PlayerPrefs.GetInt("FreeCount", 1);
+
+        // Kiểm tra xem đã đủ 24 giờ chưa
+        string lastAdWatchTime = PlayerPrefs.GetString("LastAdWatchTime", string.Empty);
+        if (!string.IsNullOrEmpty(lastAdWatchTime))
+        {
+            System.DateTime lastTime = System.DateTime.Parse(lastAdWatchTime);
+            System.TimeSpan timeDifference = System.DateTime.Now - lastTime;
+            if (timeDifference.TotalHours >= 24)
+            {
+                // Đã đủ 24 giờ, reset lại freecount và lưu thời gian hiện tại
+                freeCount = 1;
+                PlayerPrefs.SetString("LastAdWatchTime", System.DateTime.Now.ToString());
+                PlayerPrefs.Save();
+            }
+        }
     }
+
+    //public void SaveCannonsData()
+    //{
+    //    string json = JsonHelper.ToJson(cannonsData, true);
+    //    PlayerPrefs.SetString("CannonsData", json);
+    //    Debug.Log("saved");
+    //}
+
+    //public void LoadCannonsData()
+    //{
+    //    if (PlayerPrefs.HasKey("CannonsData"))
+    //    {
+    //        string json = PlayerPrefs.GetString("CannonsData");
+    //        cannonsData = JsonHelper.FromJson<CanonButtonSO>(json);
+    //        Debug.Log("loaded");
+
+    //    }
+    //}
 }
 
     //public void LoadTaskTypeData()

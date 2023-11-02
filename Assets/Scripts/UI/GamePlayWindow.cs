@@ -29,8 +29,8 @@ public class GamePlayWindow : MonoBehaviour
         currentLevelText.text = GameController.Instance.CurrentLevel.ToString();
         nextLevelText.text = (GameController.Instance.CurrentLevel + 1).ToString();
 
+        //ManagerAds.Ins.ShowBanner();
     }
-    private Tween sliderTween; // Biến để lưu trữ Tween
 
     public void UpdateSlider()
     {

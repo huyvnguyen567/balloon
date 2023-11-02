@@ -10,4 +10,9 @@ public class CanonButtonSO : ScriptableObject
     public bool isPurchased;
     public Sprite sprite;
     public GameObject prefab;
+
+    public void UpdateIsPurchasedStatus()
+    {
+        isPurchased = PlayerPrefs.GetInt(CannonName + "_IsPurchased", 0) == 1;
+    }
 }

@@ -15,3 +15,4 @@ MonoBehaviour:
   taskName: Score 5000 points in one game
   taskType: 2
   requiredValue: 5000
+  currentValue: 9

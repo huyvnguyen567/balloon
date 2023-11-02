@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47e26e05114f7a546ae8089c36217881, type: 3}
   m_Name: Task 2
   m_EditorClassIdentifier: 
-  taskName: Score 1000 points in one game
+  taskName: Score 20 points in one game
   taskType: 2
-  requiredValue: 1000
+  requiredValue: 20
+  currentValue: 9

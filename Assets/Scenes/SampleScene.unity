@@ -304,6 +304,7 @@ MonoBehaviour:
   losePopup: {fileID: 0}
   menuContentPopup: {fileID: 0}
   textPopup: {fileID: 0}
+  comingSoonPopup: {fileID: 0}
   parentWindow: {fileID: 140713506}
   parentPopup: {fileID: 2103965934}
   bigMainMenuPanelPrefab: {fileID: 6178467960026298923, guid: 1734edc76310c9748be79486579950a8, type: 3}
@@ -314,6 +315,7 @@ MonoBehaviour:
   losePopupPrefab: {fileID: 3178363865914466323, guid: aad713fc1ff99d64a8faf5dbafab9f18, type: 3}
   menuContentPopupPrefab: {fileID: 5844909424060405969, guid: 0f81b68eee145314492cdaedd8d014a2, type: 3}
   textPopupPrefab: {fileID: 4679181817685449618, guid: cd63840190d73794bbfe0e22c6962cee, type: 3}
+  comingSoonPopupPrefab: {fileID: 580311226351425316, guid: 76887303044ff244ca8838890373b874, type: 3}
 --- !u!1 &47649128
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,6 +852,79 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1853443537
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1462424587077624, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_Name
+      value: ADS
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512892915639914, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512892915639914, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512892915639914, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512892915639914, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512892915639914, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512892915639914, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512892915639914, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512892915639914, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512892915639914, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512892915639914, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512892915639914, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114075708017243130, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: isUseAdmob
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114075708017243130, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: isStartBanner
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3254213857411865700, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7289940063861750013, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2b4c09e101c7b274e81aec47dcdd2e5c, type: 3}
 --- !u!1 &1874475891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,6 +1155,8 @@ MonoBehaviour:
   upgradeFirePowerCost: 0
   numberOfGamesPlayed: 0
   ballDestroyedCount: 0
+  loginCount: 0
+  freeCount: 0
 --- !u!4 &1969367804
 Transform:
   m_ObjectHideFlags: 0
