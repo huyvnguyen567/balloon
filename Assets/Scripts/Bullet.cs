@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,23 +36,24 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
+            
             Ball ball = collision.gameObject.GetComponent<Ball>();
-            if (ball != null)
+            if (ball != null && GameController.Instance.currentGameState == GameController.GameState.Gameplay)
             {
                 ball.TakeDamage(damage);
-
             }
             ObjectPool.Instance.ReturnObjectToPool("Bullet", gameObject);
         }
         if (collision.gameObject.CompareTag("Boss"))
         {
             Boss boss = collision.gameObject.GetComponent<Boss>();
-            if (boss != null)
+            if (boss != null && GameController.Instance.currentGameState == GameController.GameState.Gameplay)
             {
                 boss.TakeDamage(damage);
-
             }
             ObjectPool.Instance.ReturnObjectToPool("Bullet", gameObject);
         }
+        VibrationController.Vibrate();
+        CameraVibration.Instance.VibrateCamera();
     }
 }

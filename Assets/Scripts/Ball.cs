@@ -18,20 +18,24 @@ public class Ball : MonoBehaviour
 
     protected int[] leftAndRight = new int[] { -1, 1 };
     protected Rigidbody2D rb;
-    protected bool isShowing;
+    [SerializeField] protected bool isShowing;
     protected int minSize = 1;
     private SpriteRenderer spriteRenderer;
+    private Collider2D col2D;
 
-    [HideInInspector] public bool isResultOfFission = true;
+    public bool isResultOfFission = true;
 
     public float initHealth;
     public int initSize;
+    protected bool isDead = false;
+
 
     public static UnityEvent UpdateScoreEvent = new UnityEvent();
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        col2D = GetComponent<Collider2D>();
     }
 
     private void OnEnable()
@@ -79,48 +83,61 @@ public class Ball : MonoBehaviour
         if (collision.CompareTag("Cannon"))
         {
             GameController.Instance.SwitchGameState(GameController.GameState.Lose);
-            //Debug.Log("game over");
+            VibrationController.Vibrate();
+            CameraVibration.Instance.VibrateCamera();
         }
         else if (!isShowing && collision.CompareTag("Wall"))
         {
-            float posX = transform.position.x;
-            if (posX < 0)
+            float wallDirection = Mathf.Sign(collision.transform.position.x - transform.position.x);
+            if (wallDirection < 0)
             {
-                rb.AddForce(Vector2.right * 150f);
+                // Bóng va chạm với tường bên trái
+                rb.velocity = new Vector2(2, rb.velocity.y);
             }
             else
             {
-                rb.AddForce(Vector2.left * 150f);
+                // Bóng va chạm với tường bên phải
+                rb.velocity = new Vector2(-2, rb.velocity.y);
             }
-            rb.AddTorque(posX * 4f);
+            VibrationController.Vibrate();
+            CameraVibration.Instance.VibrateCamera();
         }
         else if (collision.CompareTag("Ground"))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
             rb.AddTorque(rb.angularVelocity);
+            VibrationController.Vibrate();
+            CameraVibration.Instance.VibrateCamera();
         }
         else if (collision.CompareTag("Top"))
         {
             rb.AddForce(Vector2.up);
         }
-    } 
+    }
 
+ 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        DataManager.Instance.previousScore = DataManager.Instance.score;
-        DataManager.Instance.score += damage;
-        DataManager.Instance.SaveHighScore();
-        DataManager.Instance.SaveTaskTypeData(TaskType.PointsInOneGame, (int)DataManager.Instance.highScore);
-        UpdateScoreEvent.Invoke();
-        if (health < 1)
+        if (!isDead)
         {
-            Die();
+            health -= damage;
+            DataManager.Instance.previousScore = DataManager.Instance.score;
+            DataManager.Instance.score += damage;
+            DataManager.Instance.SaveHighScore();
+            DataManager.Instance.SaveTaskTypeData(TaskType.PointsInOneGame, (int)DataManager.Instance.highScore);
+            UpdateScoreEvent.Invoke();
+            if (health < 1)
+            {
+                Die();
+            }
+            else
+            {
+                UpdateVisuals();
+            }
         }
-        else
-        {
-            UpdateVisuals();
-        }
+        
+
     }
 
     protected void UpdateVisuals()
@@ -154,6 +171,7 @@ public class Ball : MonoBehaviour
 
     protected virtual void Die()
     {
+        isDead = true;
         ObjectPool.Instance.ReturnObjectToPool("Ball", gameObject);
     }
 

@@ -67,7 +67,7 @@ public class GameController : MonoBehaviour
 
     }
 
-
+   
     public void SwitchGameState(GameState newState)
     {
         switch (newState)
@@ -87,6 +87,7 @@ public class GameController : MonoBehaviour
                 {
                     SpawnBoss();
                 }
+                
                 break;
             case GameState.Pause:
                 // Xử lý khi dừng game
@@ -106,6 +107,14 @@ public class GameController : MonoBehaviour
                 break;
         }
         currentGameState = newState;
+        if (currentGameState == GameState.Gameplay)
+        {
+            ManagerAds.Ins.ShowBanner();
+        }
+        else
+        {
+            ManagerAds.Ins.HideBanner();
+        }
     }
 
     public void StartLevel(int level)

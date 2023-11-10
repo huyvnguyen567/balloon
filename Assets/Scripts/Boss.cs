@@ -62,7 +62,7 @@ public class Boss : MonoBehaviour
         // Tính toán máu của "boss" dựa trên cấp độ.
         // Ở đây, chúng ta sử dụng công thức tùy ý, ví dụ: máu tăng gấp đôi sau mỗi 5 cấp độ.
         int baseHealth = 40; // Máu cơ bản của "boss" ở level 1.
-        int healthIncrement = 40; // Số máu tăng thêm sau mỗi 5 cấp độ.
+        int healthIncrement = 150; // Số máu tăng thêm sau mỗi 5 cấp độ.
 
         int levelThreshold = 5; // Ngưỡng cấp độ (ví dụ: 5, 10, 15, ...)
 

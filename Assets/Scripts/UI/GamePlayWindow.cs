@@ -43,7 +43,6 @@ public class GamePlayWindow : MonoBehaviour
                 {
                     processSlider.value = (float)boss.GetComponent<Boss>().bossDamageTaken / boss.GetComponent<Boss>().initHealth;
 
-                    Debug.Log(boss.GetComponent<Boss>().bossDamageTaken);
                 }
             }
             else
@@ -53,7 +52,7 @@ public class GamePlayWindow : MonoBehaviour
             if (processSlider.value == 1)
             {
                 GameController.Instance.SwitchGameState(GameController.GameState.Win);
-                BallSpawner.Instance.gameObject.SetActive(false);
+                //BallSpawner.Instance.gameObject.SetActive(false);
             }
         }
     }

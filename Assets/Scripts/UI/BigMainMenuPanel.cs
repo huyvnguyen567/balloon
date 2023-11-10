@@ -160,6 +160,7 @@ public class BigMainMenuPanel : MonoBehaviour
     }
     public void OnLockClick()
     {
+        VibrationController.Vibrate();
         UIManager.Instance.comingSoonPopup.SetActive(true);
     }
     //public void OnPlayEventClick()

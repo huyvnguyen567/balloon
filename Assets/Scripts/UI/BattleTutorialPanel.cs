@@ -10,7 +10,6 @@ public class BattleTutorialPanel : BaseUI
     public GameObject cannon;
     public GameObject mouseHighLight;
     public bool hasBeenClicked = false; // Biến để kiểm tra đã nhấp chuột lần đầu hay chưa
-    private bool isCannonCreated = false;
     public TMP_Text levelText;
     public TMP_Text highScoreText;
 

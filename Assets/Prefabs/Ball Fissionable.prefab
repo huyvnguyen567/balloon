@@ -337,9 +337,9 @@ Rigidbody2D:
   m_AngularDrag: 0.5
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &3145090022278324628
 MonoBehaviour:
@@ -369,7 +369,7 @@ MonoBehaviour:
   - {r: 0.509434, g: 0.13111521, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0.8584906, g: 0.8044652, b: 0, a: 1}
+  isShowing: 0
   isResultOfFission: 1
   initHealth: 0
   initSize: 0
-  ballPrefab: {fileID: 6047138342208323817}

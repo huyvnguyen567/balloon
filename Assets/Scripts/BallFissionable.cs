@@ -7,12 +7,13 @@ using UnityEngine.Events;
 
 public class BallFissionable : Ball
 {
-    [SerializeField] private GameObject ballPrefab;
 
     public static UnityEvent UpdateProcessEvent = new UnityEvent();
 
+    
     override protected void Die()
     {
+        isDead = true;
         ObjectPool.Instance.ReturnObjectToPool("Ball", gameObject);
         DataManager.Instance.ballDestroyedCount++;
         DataManager.Instance.SaveTaskTypeData(TaskType.BallBlasted, DataManager.Instance.ballDestroyedCount);
@@ -21,11 +22,11 @@ public class BallFissionable : Ball
             UpdateVisuals();
             SplitBalls();
         }
-        else
+        else 
         {
             DropItem();
             GameController.Instance.ballSize1DestroyedCount++;
-
+            Debug.Log(gameObject.GetInstanceID());
             UpdateProcessEvent.Invoke();
         }
     }
@@ -49,8 +50,7 @@ public class BallFissionable : Ball
         {
             GameObject newBall = ObjectPool.Instance.GetObjectFromPool("Ball"); ;
             newBall.transform.position = transform.position;
-            newBall.GetComponent<Rigidbody2D>().velocity = new Vector2(leftAndRight[i], 5);
-
+            newBall.GetComponent<Rigidbody2D>().velocity = new Vector2(leftAndRight[i] * 2, 5);
             BallFissionable newBallFissionable = newBall.GetComponent<BallFissionable>();
             newBallFissionable.health = initHealth / 2;
             newBallFissionable.initHealth = newBallFissionable.health;
@@ -58,9 +58,11 @@ public class BallFissionable : Ball
             {
                 newBallFissionable.health = 1;
             }
+            newBallFissionable.isDead = false;
             newBallFissionable.size = initSize - 1;
             newBallFissionable.initSize = newBallFissionable.size;
             newBallFissionable.isResultOfFission = true;
+            newBallFissionable.isShowing = false;
             newBallFissionable.UpdateVisuals();
         }
     }

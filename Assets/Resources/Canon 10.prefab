@@ -489,7 +489,7 @@ MonoBehaviour:
   - {fileID: 9215686586581087803}
   - {fileID: 2910629532442281914}
   velocityX: 1
-  fireRate: 0.2
+  fireRateTime: 0.2
 --- !u!50 &118981354780877782
 Rigidbody2D:
   serializedVersion: 4
@@ -509,7 +509,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 6
 --- !u!61 &118981354780877781
 BoxCollider2D:

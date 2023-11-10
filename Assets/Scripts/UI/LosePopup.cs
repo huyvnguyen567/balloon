@@ -19,6 +19,7 @@ public class LosePopup : MonoBehaviour
         DataManager.Instance.numberOfGamesPlayed++;
         DataManager.Instance.SaveTaskTypeData(TaskType.GamesPlayed, DataManager.Instance.numberOfGamesPlayed);
         DataManager.Instance.SaveLevel();
+        //BallSpawner.Instance.gameObject.SetActive(false);
         PlayerPrefs.DeleteKey("Score");
     }
     void Start()
